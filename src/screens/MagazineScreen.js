@@ -28,17 +28,12 @@ export default function MagazineScreen({ navigate }) {
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
 
-        {/* ── Section Banner ── */}
-        <View style={s.heroBanner}>
-          <Text style={s.heroTag}>MAGAZINE</Text>
-          <Text style={s.heroText}>
-            Dive into the Create universe and discover all the stories in our magazine.
-          </Text>
-        </View>
-
         {/* ── Article Cards ── */}
         {articlesData.map((article, index) => (
           <TouchableOpacity key={article.id} style={s.articleCard} activeOpacity={0.9}>
+            {/* Category label ABOVE image */}
+            <Text style={s.categoryLabel}>{article.category}</Text>
+
             {/* Image area */}
             <View style={[s.articleImg, { backgroundColor: article.bgColor }]}>
               {/* Decorative store illustration */}
@@ -50,7 +45,6 @@ export default function MagazineScreen({ navigate }) {
                 <View style={[s.storeStool, { left: '30%' }]} />
                 <View style={[s.storeStool, { left: '45%' }]} />
               </View>
-              <Text style={s.categoryBadge}>{article.category}</Text>
             </View>
 
             {/* Body */}
@@ -65,6 +59,7 @@ export default function MagazineScreen({ navigate }) {
             </View>
           </TouchableOpacity>
         ))}
+        {/* Separator between articles - last item has borderBottom on articleCard */}
       </ScrollView>
 
       <BottomTabBar active="magazine" onPress={navigate} />
@@ -88,28 +83,20 @@ const s = StyleSheet.create({
   content: {
     paddingBottom: 30,
   },
-  heroBanner: {
-    backgroundColor: Colors.bgWarm,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.xl,
-    marginBottom: Spacing.xs,
-  },
-  heroTag: {
+  categoryLabel: {
     fontSize: Typography.xs,
     fontWeight: Typography.extraBold,
-    letterSpacing: 3,
+    letterSpacing: 2,
     color: Colors.textDark,
-    marginBottom: Spacing.xs,
-  },
-  heroText: {
-    fontSize: Typography.xxl,
-    fontWeight: Typography.medium,
-    color: Colors.textDark,
-    lineHeight: 30,
+    textTransform: 'uppercase',
+    paddingHorizontal: Spacing.lg,
+    paddingTop: Spacing.lg,
+    paddingBottom: Spacing.xs,
   },
   articleCard: {
     backgroundColor: Colors.bgWhite,
-    marginBottom: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
   },
   articleImg: {
     height: 220,
@@ -149,19 +136,6 @@ const s = StyleSheet.create({
     backgroundColor: 'rgba(190,175,155,0.6)',
     borderRadius: 6,
   },
-  categoryBadge: {
-    margin: Spacing.md,
-    fontSize: Typography.xs,
-    fontWeight: Typography.extraBold,
-    letterSpacing: 2,
-    color: Colors.textDark,
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 5,
-    overflow: 'hidden',
-    alignSelf: 'flex-start',
-  },
   articleBody: {
     padding: Spacing.md,
     paddingBottom: Spacing.lg,
@@ -189,7 +163,6 @@ const s = StyleSheet.create({
     color: Colors.textDark,
     textDecorationLine: 'underline',
     letterSpacing: 0.3,
-    whiteSpace: 'nowrap',
   },
   articleDesc: {
     fontSize: Typography.sm,

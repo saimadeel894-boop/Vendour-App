@@ -38,6 +38,8 @@ export default function HomeScreen({ navigate }) {
 
   const handleFabAction = (key) => {
     setFabOpen(false);
+    if (key === 'tap')    navigate('taptorun');
+    if (key === 'auto')   navigate('createscene');
     if (key === 'device') setShowAddDevice(true);
     if (key === 'home')   setShowAddHome(true);
   };
@@ -56,6 +58,22 @@ export default function HomeScreen({ navigate }) {
   return (
     <SafeAreaView style={s.root}>
       <StatusBar barStyle="dark-content" />
+
+      {/* ── Gradient Background (simulated: #F5EDE3 -> #F2C4C4) ── */}
+      <View style={s.gradientBg}>
+        {Array.from({ length: 30 }).map((_, i) => {
+          const t = i / 29;
+          const r = Math.round(245 + (242 - 245) * t);
+          const g = Math.round(237 + (196 - 237) * t);
+          const b = Math.round(227 + (196 - 227) * t);
+          return (
+            <View
+              key={i}
+              style={[s.gradientStrip, { backgroundColor: `rgb(${r},${g},${b})` }]}
+            />
+          );
+        })}
+      </View>
 
       {/* ── Header ── */}
       <View style={s.header}>
@@ -282,7 +300,14 @@ export default function HomeScreen({ navigate }) {
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.bgWarm,
+    backgroundColor: Colors.bgWarmGradientStart,
+  },
+  gradientBg: {
+    ...StyleSheet.absoluteFillObject,
+    flexDirection: 'column',
+  },
+  gradientStrip: {
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
@@ -309,8 +334,8 @@ const s = StyleSheet.create({
     paddingTop: Spacing.xs,
   },
   homeTitle: {
-    fontSize: 36,
-    fontWeight: Typography.bold,
+    fontSize: Typography.xxl,
+    fontWeight: Typography.medium,
     color: Colors.textDark,
     textAlign: 'center',
     marginBottom: Spacing.xs,
@@ -333,7 +358,7 @@ const s = StyleSheet.create({
   deviceCard: {
     width: (SCREEN_W - Spacing.lg * 2 - 14) / 2,
     backgroundColor: Colors.bgWhite,
-    borderRadius: Radius.xl,
+    borderRadius: Radius.lg,
     padding: Spacing.md,
     minHeight: 120,
     ...Shadow.sm,

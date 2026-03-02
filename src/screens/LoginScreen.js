@@ -66,6 +66,9 @@ export default function LoginScreen({ navigate }) {
         >
           <Text style={s.guestText}>Continue as guest</Text>
         </TouchableOpacity>
+
+        <View style={s.vendomSeparator} />
+        <Text style={s.vendomLogo}>VENDOM</Text>
       </View>
     </View>
   );
@@ -225,5 +228,19 @@ const s = StyleSheet.create({
     fontWeight: Typography.bold,
     textAlign: 'center',
     paddingVertical: 6,
+  },
+  vendomSeparator: {
+    height: 1,
+    backgroundColor: '#AAAAAA',
+    alignSelf: 'stretch',
+    marginTop: Spacing.xl,
+    marginBottom: Spacing.sm,
+  },
+  vendomLogo: {
+    fontSize: 11,
+    fontWeight: '800',
+    letterSpacing: 6,
+    color: '#AAAAAA',
+    textAlign: 'center',
   },
 });

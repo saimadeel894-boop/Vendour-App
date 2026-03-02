@@ -24,12 +24,15 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import LoginScreen    from './src/screens/LoginScreen';
-import HomeScreen     from './src/screens/HomeScreen';
-import ShopScreen     from './src/screens/ShopScreen';
-import MagazineScreen from './src/screens/MagazineScreen';
-import RecipesScreen  from './src/screens/RecipesScreen';
-import AccountScreen  from './src/screens/AccountScreen';
+import LoginScreen       from './src/screens/LoginScreen';
+import HomeScreen        from './src/screens/HomeScreen';
+import ShopScreen        from './src/screens/ShopScreen';
+import MagazineScreen    from './src/screens/MagazineScreen';
+import RecipesScreen     from './src/screens/RecipesScreen';
+import AccountScreen     from './src/screens/AccountScreen';
+import TapToRunScreen    from './src/screens/TapToRunScreen';
+import CreateSceneScreen from './src/screens/CreateSceneScreen';
+import ShowAreaScreen    from './src/screens/ShowAreaScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('login');
@@ -38,13 +41,16 @@ export default function App() {
 
   const renderScreen = () => {
     switch (screen) {
-      case 'login':    return <LoginScreen    navigate={navigate} />;
-      case 'home':     return <HomeScreen     navigate={navigate} />;
-      case 'shop':     return <ShopScreen     navigate={navigate} />;
-      case 'magazine': return <MagazineScreen navigate={navigate} />;
-      case 'recipes':  return <RecipesScreen  navigate={navigate} />;
-      case 'account':  return <AccountScreen  navigate={navigate} />;
-      default:         return <HomeScreen     navigate={navigate} />;
+      case 'login':       return <LoginScreen       navigate={navigate} />;
+      case 'home':        return <HomeScreen        navigate={navigate} />;
+      case 'shop':        return <ShopScreen        navigate={navigate} />;
+      case 'magazine':    return <MagazineScreen    navigate={navigate} />;
+      case 'recipes':     return <RecipesScreen     navigate={navigate} />;
+      case 'account':     return <AccountScreen     navigate={navigate} />;
+      case 'taptorun':    return <TapToRunScreen    navigate={navigate} />;
+      case 'createscene': return <CreateSceneScreen navigate={navigate} />;
+      case 'showarea':    return <ShowAreaScreen    navigate={navigate} />;
+      default:            return <HomeScreen        navigate={navigate} />;
     }
   };
 

@@ -4,7 +4,7 @@ import {
   View, Text, StyleSheet, TouchableOpacity,
   ScrollView, SafeAreaView, StatusBar,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius, Shadow } from '../theme';
+import { Colors, Typography, Spacing } from '../theme';
 import { BottomTabBar, Icon, MenuRow } from '../components';
 import { userData } from '../data';
 
@@ -77,15 +77,11 @@ const s = StyleSheet.create({
     gap: Spacing.md,
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.xl,
-    backgroundColor: Colors.bgWhite,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
-    marginBottom: Spacing.md,
   },
   avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -99,13 +95,13 @@ const s = StyleSheet.create({
     gap: 4,
   },
   userName: {
-    fontSize: Typography.xxl,
+    fontSize: Typography.xxxl,
     fontWeight: Typography.bold,
     color: Colors.textDark,
   },
   userEmail: {
     fontSize: Typography.sm,
-    color: Colors.textMid,
+    color: Colors.textLight,
   },
   sectionLabel: {
     fontSize: Typography.xs,

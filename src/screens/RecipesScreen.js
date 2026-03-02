@@ -4,7 +4,7 @@ import {
   View, Text, StyleSheet, TouchableOpacity,
   ScrollView, SafeAreaView, StatusBar,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius, Shadow } from '../theme';
+import { Colors, Typography, Spacing } from '../theme';
 import { BottomTabBar, Icon } from '../components';
 import { recipesData } from '../data';
 
@@ -40,13 +40,11 @@ export default function RecipesScreen({ navigate }) {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
         {recipes.map(recipe => (
           <View key={recipe.id} style={s.recipeCard}>
-            {/* Image */}
-            <View style={[s.recipeImg, { backgroundColor: recipe.bgColor }]}>
-              {/* Illustrated food */}
-              <View style={s.foodPlate}>
-                <View style={s.foodItem} />
-              </View>
-            </View>
+            {/* Image area - white/empty placeholder */}
+            <View style={s.recipeImg} />
+
+            {/* Separator */}
+            <View style={s.recipeSeparator} />
 
             {/* Info */}
             <View style={s.recipeInfo}>
@@ -118,29 +116,16 @@ const s = StyleSheet.create({
   },
   recipeCard: {
     backgroundColor: Colors.bgWhite,
-    marginBottom: 1,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.borderLight,
+    borderBottomColor: Colors.border,
   },
   recipeImg: {
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: 180,
+    backgroundColor: Colors.bgWhite,
   },
-  foodPlate: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    ...Shadow.sm,
-  },
-  foodItem: {
-    width: 70,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'rgba(180,140,100,0.5)',
+  recipeSeparator: {
+    height: 1,
+    backgroundColor: Colors.border,
   },
   recipeInfo: {
     padding: Spacing.md,

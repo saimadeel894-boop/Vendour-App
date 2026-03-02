@@ -442,7 +442,7 @@ const s = StyleSheet.create({
   },
   shopHeaderRight: {
     flexDirection: 'row',
-    gap: 4,
+    gap: Spacing.xs,
     alignItems: 'center',
   },
   headerIconBtn: {
@@ -468,8 +468,9 @@ const s = StyleSheet.create({
     fontWeight: Typography.bold,
   },
   heroBanner: {
+    minHeight: 300,
     height: 320,
-    backgroundColor: '#1E4D8C',
+    backgroundColor: Colors.blue,
     overflow: 'hidden',
   },
   heroContent: {
@@ -542,13 +543,15 @@ const s = StyleSheet.create({
   productGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 1,
-    paddingHorizontal: 1,
     marginTop: Spacing.md,
   },
   productCard: {
-    width: (SCREEN_W - 3) / 2,
+    width: SCREEN_W / 2,
     backgroundColor: Colors.bgWhite,
+    borderRightWidth: 1,
+    borderRightColor: Colors.border,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
   },
   productImg: {
     height: 180,
@@ -576,6 +579,7 @@ const s = StyleSheet.create({
     fontWeight: Typography.bold,
     color: Colors.textDark,
     letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   productSubtitle: {
     fontSize: Typography.xs,
