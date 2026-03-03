@@ -1,13 +1,19 @@
 {
     "expo": {
-        "name": "Vendour App",
+        "name": "VendourApp",
         "slug": "vendour-app",
         "version": "1.0.0",
         "sdkVersion": "54.0.0",
         "newArchEnabled": false,
+        "orientation": "portrait",
         "platforms": [
             "ios",
             "android"
-        ]
+        ],
+        "android": {
+            "adaptiveIcon": {
+                "backgroundColor": "#ffffff"
+            }
+        }
     }
 }
