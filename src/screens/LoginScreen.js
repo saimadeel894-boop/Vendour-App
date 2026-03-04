@@ -4,12 +4,12 @@ import {
   View, Text, StyleSheet, TouchableOpacity,
   SafeAreaView, StatusBar, Platform,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius } from '../theme';
+import { Colors, Typography, Spacing, Radius, SCREEN_H } from '../theme';
 
 export default function LoginScreen({ navigate }) {
   return (
-    <View style={s.root}>
-      <StatusBar barStyle="light-content" backgroundColor="#1C1C1E" />
+    <SafeAreaView style={s.root}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.bgHero} />
 
       {/* ── Dark Hero ── */}
       <View style={s.hero}>
@@ -70,22 +70,23 @@ export default function LoginScreen({ navigate }) {
         <View style={s.vendomSeparator} />
         <Text style={s.vendomLogo}>VENDOM</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#1C1C1E',
+    backgroundColor: Colors.bgWhite,
   },
   hero: {
-    flex: 1,
+    flex: 0.65,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 32,
     paddingTop: Platform.OS === 'ios' ? 60 : 40,
     paddingBottom: 20,
+    backgroundColor: Colors.bgHero,
   },
   brand: {
     color: Colors.textWhite,
@@ -194,9 +195,10 @@ const s = StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     paddingTop: Spacing.xxl,
     paddingBottom: Platform.OS === 'ios' ? 48 : 36,
-    borderTopLeftRadius: 26,
-    borderTopRightRadius: 26,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     gap: 14,
+    flex: 0.35,
   },
   btnDark: {
     backgroundColor: '#2C2C2C',

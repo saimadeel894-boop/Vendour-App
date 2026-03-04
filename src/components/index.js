@@ -108,7 +108,7 @@ const tbStyles = StyleSheet.create({
     borderTopColor: Colors.border,
     height: TAB_BAR_HEIGHT + (Platform.OS === 'ios' ? 20 : 0),
     paddingTop: 8,
-    paddingBottom: Platform.OS === 'ios' ? 24 : 8,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 8,
     paddingHorizontal: 4,
   },
   item: {
@@ -296,7 +296,7 @@ const mrStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.lg,
+    paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderLight,
     backgroundColor: Colors.bgWhite,

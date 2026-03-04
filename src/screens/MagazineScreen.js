@@ -96,7 +96,7 @@ const s = StyleSheet.create({
   articleCard: {
     backgroundColor: Colors.bgWhite,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: Colors.borderLight,
   },
   articleImg: {
     height: 220,

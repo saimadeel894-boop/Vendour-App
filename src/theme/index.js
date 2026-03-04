@@ -52,7 +52,7 @@ export const Typography = {
   extraBold: '800',
 
   // Font sizes
-  xs: 10,
+  xs: 11,
   sm: 12,
   base: 14,
   md: 15,
@@ -69,7 +69,7 @@ export const Spacing = {
   xs: 8,
   sm: 12,
   md: 16,
-  lg: 20,
+  lg: 18,
   xl: 24,
   xxl: 32,
   xxxl: 48,

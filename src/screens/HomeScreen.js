@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
   ScrollView, SafeAreaView, StatusBar, Modal,
-  TextInput, Platform, Animated,
+  TextInput, Platform,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W } from '../theme';
+import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W, SCREEN_H } from '../theme';
 import { BottomTabBar, Icon, ToggleSwitch, PrimaryButton } from '../components';
 import { devicesData, deviceTypesData } from '../data';
 
@@ -330,19 +330,20 @@ const s = StyleSheet.create({
   },
   scroll: { flex: 1 },
   scrollContent: {
-    paddingHorizontal: Spacing.lg,
+    paddingHorizontal: Spacing.md,
     paddingTop: Spacing.xs,
   },
   homeTitle: {
-    fontSize: Typography.xxl,
-    fontWeight: Typography.medium,
+    fontSize: Typography.hero,
+    fontWeight: Typography.bold,
     color: Colors.textDark,
     textAlign: 'center',
+    marginTop: Spacing.xs,
     marginBottom: Spacing.xs,
     letterSpacing: -0.5,
   },
   emptyText: {
-    fontSize: Typography.sm,
+    fontSize: Typography.base,
     color: Colors.textLight,
     textAlign: 'center',
     marginTop: Spacing.xs,
@@ -352,14 +353,14 @@ const s = StyleSheet.create({
   deviceGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 14,
+    gap: Spacing.md,
     marginTop: Spacing.md,
   },
   deviceCard: {
-    width: (SCREEN_W - Spacing.lg * 2 - 14) / 2,
+    width: (SCREEN_W - Spacing.md * 2 - Spacing.md) / 2,
     backgroundColor: Colors.bgWhite,
-    borderRadius: Radius.lg,
-    padding: Spacing.md,
+    borderRadius: Radius.xl,
+    padding: Spacing.lg,
     minHeight: 120,
     ...Shadow.sm,
   },
@@ -439,11 +440,11 @@ const s = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 74,
-    right: Spacing.lg,
+    bottom: 80,
+    right: Spacing.md,
     backgroundColor: Colors.bgWhite,
     paddingHorizontal: Spacing.xl,
-    paddingVertical: 14,
+    paddingVertical: Spacing.md,
     borderRadius: Radius.full,
     flexDirection: 'row',
     alignItems: 'center',

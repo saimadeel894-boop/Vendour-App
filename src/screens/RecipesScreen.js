@@ -120,12 +120,12 @@ const s = StyleSheet.create({
     borderBottomColor: Colors.border,
   },
   recipeImg: {
-    height: 180,
-    backgroundColor: Colors.bgWhite,
+    height: 200,
+    backgroundColor: Colors.bgLight,
   },
   recipeSeparator: {
     height: 1,
-    backgroundColor: Colors.border,
+    backgroundColor: Colors.borderLight,
   },
   recipeInfo: {
     padding: Spacing.md,
@@ -146,8 +146,8 @@ const s = StyleSheet.create({
     color: Colors.textLight,
   },
   recipeTitle: {
-    fontSize: Typography.xl,
-    fontWeight: Typography.bold,
+    fontSize: Typography.xxl,
+    fontWeight: Typography.extraBold,
     color: Colors.textDark,
     marginBottom: Spacing.sm,
     lineHeight: 26,
