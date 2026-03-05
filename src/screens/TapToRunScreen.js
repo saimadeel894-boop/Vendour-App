@@ -1,69 +1,51 @@
-// src/screens/TapToRunScreen.js
+// src/screens/TapToRunScreen.js — SECTION 7 pixel-perfect
 import React from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
   SafeAreaView, StatusBar, ScrollView,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius } from '../theme';
-import { Icon } from '../components';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TapToRunScreen({ navigate }) {
   return (
     <SafeAreaView style={s.root}>
       <StatusBar barStyle="dark-content" />
 
-      {/* Header */}
-      <View style={s.header}>
-        <TouchableOpacity onPress={() => navigate('home')}>
-          <Text style={s.cancelText}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={s.cancelBtn} onPress={() => navigate('home')}>
+        <Text style={s.cancelText}>Cancel</Text>
+      </TouchableOpacity>
 
       <ScrollView contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
-        {/* Shield icon */}
-        <View style={s.shieldWrap}>
-          <View style={s.shieldIcon}>
-            <Icon name="lock" size={32} color={Colors.bgWhite} />
-          </View>
-        </View>
-
+        <View style={s.iconSquare} />
         <Text style={s.title}>Create Tap-to-Run</Text>
 
-        {/* Card 1: Then */}
         <View style={s.card}>
           <View style={s.cardHeader}>
             <Text style={s.cardLabel}>Then</Text>
-            <TouchableOpacity style={s.addBtn}>
-              <Text style={s.addBtnText}>＋</Text>
+            <TouchableOpacity style={s.orangePlus}>
+              <Text style={s.orangePlusText}>+</Text>
             </TouchableOpacity>
           </View>
-          <Text style={s.placeholder}>Add Task</Text>
+          <View style={s.placeholderBox}>
+            <Text style={s.placeholderText}>Add Task</Text>
+          </View>
         </View>
 
-        {/* Card 2: Display Area */}
         <View style={s.card}>
-          <TouchableOpacity
-            style={s.cardRow}
-            onPress={() => navigate('showarea')}
-          >
+          <TouchableOpacity style={s.cardRow} onPress={() => navigate('showarea')}>
             <Text style={s.cardLabel}>Display Area</Text>
             <View style={s.cardRight}>
               <Text style={s.cardValue}>1 area(s)</Text>
-              <Icon name="chevron" size={16} color={Colors.textLight} />
+              <Ionicons name="chevron-forward" size={18} color="#888888" />
             </View>
           </TouchableOpacity>
         </View>
 
-        <View style={{ height: 80 }} />
+        <View style={{ height: 100 }} />
       </ScrollView>
 
-      {/* Save button */}
       <View style={s.footer}>
-        <TouchableOpacity
-          style={s.saveBtn}
-          onPress={() => navigate('home')}
-          activeOpacity={0.85}
-        >
+        <TouchableOpacity style={s.saveBtn} onPress={() => navigate('home')} activeOpacity={0.85}>
           <Text style={s.saveBtnText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -72,108 +54,70 @@ export default function TapToRunScreen({ navigate }) {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.bgWhite },
-  header: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-  },
-  cancelText: {
-    fontSize: Typography.md,
-    color: Colors.textDark,
-    fontWeight: Typography.medium,
-  },
-  content: {
-    paddingHorizontal: Spacing.lg,
-    alignItems: 'center',
-  },
-  shieldWrap: {
-    alignItems: 'center',
-    marginBottom: Spacing.lg,
-  },
-  shieldIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: Radius.sm,
-    backgroundColor: Colors.orange,
-    alignItems: 'center',
-    justifyContent: 'center',
+  root: { flex: 1, backgroundColor: '#F5F5F5' },
+  cancelBtn: { paddingHorizontal: 16, paddingVertical: 12 },
+  cancelText: { fontSize: 16, color: '#888888' },
+  content: { paddingHorizontal: 16 },
+  iconSquare: {
+    width: 72,
+    height: 72,
+    backgroundColor: '#6B7C93',
+    borderRadius: 20,
+    alignSelf: 'center',
+    marginTop: 24,
+    marginBottom: 8,
   },
   title: {
-    fontSize: Typography.xxl,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
-    marginBottom: Spacing.xl,
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#1A1A1A',
     textAlign: 'center',
+    marginBottom: 16,
   },
   card: {
-    width: '100%',
-    backgroundColor: Colors.bgWhite,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: Radius.md,
-    padding: Spacing.lg,
-    marginBottom: Spacing.md,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 20,
+    marginHorizontal: 16,
+    marginBottom: 16,
   },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: Spacing.sm,
-  },
-  cardLabel: {
-    fontSize: Typography.md,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
-  },
-  addBtn: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.orange,
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  cardLabel: { fontSize: 18, fontWeight: '800', color: '#1A1A1A' },
+  orangePlus: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#E84E1B',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  addBtnText: {
-    color: Colors.bgWhite,
-    fontSize: 18,
-    fontWeight: Typography.bold,
-    lineHeight: 20,
-  },
-  placeholder: {
-    fontSize: Typography.base,
-    color: Colors.textPlaceholder,
-  },
-  cardRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  orangePlusText: { fontSize: 20, color: '#FFFFFF', fontWeight: '700' },
+  placeholderBox: {
+    borderWidth: 1,
+    borderColor: '#E8E0D6',
+    borderRadius: 10,
+    paddingVertical: 20,
+    marginTop: 12,
     alignItems: 'center',
   },
-  cardRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.xs,
-  },
-  cardValue: {
-    fontSize: Typography.base,
-    color: Colors.textLight,
-  },
+  placeholderText: { fontSize: 15, color: '#CCCCCC', textAlign: 'center' },
+  cardRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  cardRight: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  cardValue: { fontSize: 14, color: '#888888' },
   footer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    padding: Spacing.lg,
-    backgroundColor: Colors.bgWhite,
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+    backgroundColor: '#F5F5F5',
   },
   saveBtn: {
-    backgroundColor: Colors.orange,
-    borderRadius: Radius.full,
-    paddingVertical: 17,
+    backgroundColor: '#E84E1B',
+    borderRadius: 12,
+    paddingVertical: 18,
     alignItems: 'center',
   },
-  saveBtnText: {
-    color: Colors.bgWhite,
-    fontSize: Typography.lg,
-    fontWeight: Typography.bold,
-  },
+  saveBtnText: { fontSize: 17, fontWeight: '700', color: '#FFFFFF' },
 });

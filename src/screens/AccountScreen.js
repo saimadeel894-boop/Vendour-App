@@ -4,22 +4,10 @@ import {
   View, Text, StyleSheet, TouchableOpacity,
   ScrollView, SafeAreaView, StatusBar,
 } from 'react-native';
-import { Colors, Typography, Spacing } from '../theme';
-import { BottomTabBar, Icon, MenuRow } from '../components';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { BottomTabBar, MenuRow } from '../components';
 import { userData } from '../data';
-
-const MY_ACCOUNT_ITEMS = [
-  { key: 'info',     icon: 'user',      label: 'My information'      },
-  { key: 'security', icon: 'lock',      label: 'Account and security' },
-];
-
-const WALLET_ITEMS = [
-  { key: 'address',   icon: 'pin',       label: 'My addresses'       },
-  { key: 'orders',    icon: 'order',     label: 'Order History'      },
-  { key: 'returns',   icon: 'returns',   label: 'Returns'            },
-  { key: 'guarantee', icon: 'guarantee', label: 'Guarantee registry' },
-  { key: 'vouchers',  icon: 'voucher',   label: 'Discount vouchers'  },
-];
 
 export default function AccountScreen({ navigate }) {
   return (
@@ -28,39 +16,92 @@ export default function AccountScreen({ navigate }) {
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
 
-        {/* ── User Profile Header ── */}
+        {/* Profile Header */}
         <View style={s.profileSection}>
-          {/* Avatar */}
           <View style={[s.avatar, { backgroundColor: userData.avatarColor }]}>
             <Text style={s.avatarText}>{userData.initials}</Text>
           </View>
-          {/* Name + Email */}
           <View style={s.profileInfo}>
             <Text style={s.userName}>{userData.firstName} {userData.lastName}</Text>
             <Text style={s.userEmail}>{userData.email}</Text>
           </View>
         </View>
 
-        {/* ── MY ACCOUNT Section ── */}
+        {/* MY ACCOUNT */}
         <Text style={s.sectionLabel}>MY ACCOUNT</Text>
         <View style={s.menuGroup}>
-          {MY_ACCOUNT_ITEMS.map((item, index) => (
-            <View key={item.key}>
-              <MenuRow icon={item.icon} label={item.label} onPress={() => {}} />
-            </View>
-          ))}
+          <MenuRow
+            iconComponent={<Ionicons name="person-outline" size={20} color="#1A1A1A" />}
+            label="My information"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<Ionicons name="lock-closed-outline" size={20} color="#1A1A1A" />}
+            label="Account and security"
+            onPress={() => {}}
+          />
         </View>
 
-        {/* ── WALLET Section ── */}
+        {/* WALLET */}
         <Text style={s.sectionLabel}>WALLET</Text>
         <View style={s.menuGroup}>
-          {WALLET_ITEMS.map((item) => (
-            <View key={item.key}>
-              <MenuRow icon={item.icon} label={item.label} onPress={() => {}} />
-            </View>
-          ))}
+          <MenuRow
+            iconComponent={<Ionicons name="location-outline" size={20} color="#1A1A1A" />}
+            label="My addresses"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<Ionicons name="time-outline" size={20} color="#1A1A1A" />}
+            label="Order History"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<MaterialCommunityIcons name="package-variant" size={20} color="#1A1A1A" />}
+            label="Returns"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<Ionicons name="shield-checkmark-outline" size={20} color="#1A1A1A" />}
+            label="Guarantee registry"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<MaterialCommunityIcons name="ticket-percent-outline" size={20} color="#1A1A1A" />}
+            label="Discount vouchers"
+            onPress={() => {}}
+          />
         </View>
 
+        {/* Contact, Settings, About */}
+        <View style={s.menuGroup}>
+          <MenuRow
+            iconComponent={<Ionicons name="headset-outline" size={20} color="#1A1A1A" />}
+            label="Contact"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<Ionicons name="settings-outline" size={20} color="#1A1A1A" />}
+            label="Settings"
+            onPress={() => {}}
+          />
+          <MenuRow
+            iconComponent={<Ionicons name="help-circle-outline" size={20} color="#1A1A1A" />}
+            label="About"
+            onPress={() => {}}
+          />
+        </View>
+
+        {/* Text-only rows */}
+        <View style={s.menuGroup}>
+          <MenuRow label="Social media" onPress={() => {}} iconComponent={null} />
+          <MenuRow label="Rate this app" onPress={() => {}} iconComponent={null} />
+          <MenuRow label="Recommend this app" onPress={() => {}} iconComponent={null} />
+        </View>
+
+        {/* Log out */}
+        <TouchableOpacity style={s.logoutBtn} onPress={() => navigate('login')} activeOpacity={0.85}>
+          <Text style={s.logoutText}>Log out</Text>
+        </TouchableOpacity>
       </ScrollView>
 
       <BottomTabBar active="account" onPress={navigate} />
@@ -69,16 +110,15 @@ export default function AccountScreen({ navigate }) {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.bgLight },
-  content: { paddingBottom: 30 },
+  root: { flex: 1, backgroundColor: '#F8F5F0' },
+  content: { paddingBottom: 40 },
   profileSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.md,
+    gap: 16,
     paddingHorizontal: 20,
     paddingVertical: 24,
-    backgroundColor: Colors.bgWhite,
-    marginBottom: Spacing.md,
+    backgroundColor: '#FFFFFF',
   },
   avatar: {
     width: 64,
@@ -87,38 +127,39 @@ const s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarText: {
-    fontSize: Typography.xxl,
-    fontWeight: Typography.bold,
-    color: Colors.textWhite,
-  },
-  profileInfo: {
-    flex: 1,
-    gap: 4,
-  },
-  userName: {
-    fontSize: Typography.xxxl,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
-  },
-  userEmail: {
-    fontSize: Typography.sm,
-    color: Colors.textMid,
-    marginTop: 3,
-  },
+  avatarText: { fontSize: 22, fontWeight: '700', color: '#FFFFFF' },
+  profileInfo: { flex: 1 },
+  userName: { fontSize: 20, fontWeight: '700', color: '#1A1A1A' },
+  userEmail: { fontSize: 13, color: '#888888', marginTop: 2 },
   sectionLabel: {
-    fontSize: Typography.xs,
-    fontWeight: Typography.extraBold,
-    letterSpacing: 2,
-    color: Colors.textLight,
-    paddingHorizontal: Spacing.md,
+    fontSize: 12,
+    color: '#AAAAAA',
+    letterSpacing: 1.5,
+    fontWeight: '400',
+    paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: Spacing.sm,
+    paddingBottom: 8,
+    backgroundColor: '#F8F5F0',
   },
   menuGroup: {
-    backgroundColor: Colors.bgWhite,
-    marginBottom: Spacing.sm,
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: Colors.border,
+    borderTopColor: '#E8E0D6',
+  },
+  logoutBtn: {
+    marginHorizontal: 16,
+    marginTop: 24,
+    marginBottom: 32,
+    paddingVertical: 16,
+    borderRadius: 50,
+    borderWidth: 1.5,
+    borderColor: '#CC0000',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+  },
+  logoutText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#CC0000',
   },
 });

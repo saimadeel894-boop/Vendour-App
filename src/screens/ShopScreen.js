@@ -2,11 +2,28 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar,
+  ScrollView, SafeAreaView, StatusBar, Modal,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W } from '../theme';
 import { BottomTabBar, DiscountBanner, Icon } from '../components';
 import { productsData, appConfig } from '../data';
+
+const HAMBURGER_ITEMS = [
+  { label: 'HEATING DEALS', badge: 'SALE', badgeColor: '#E84E1B' },
+  { label: 'SKINCARE', badge: 'NEW', badgeColor: '#E0E0E0' },
+  { label: 'BABY', badge: 'NEW', badgeColor: '#E0E0E0' },
+  { label: 'NEW IN' },
+  { label: 'FRIDGES', expand: true },
+  { label: 'KITCHEN', expand: true },
+  { label: 'CEILING FANS', expand: true },
+  { label: 'HEATERS', expand: true },
+  { label: 'PERSONAL CARE', expand: true },
+  { label: 'AUDIO AND TV', expand: true },
+  { label: 'TRAVEL SUITCASES', expand: true },
+  { label: 'GARDEN AND OUTDOOR', expand: true },
+];
 
 // ── PRODUCT DETAIL SCREEN ────────────────────────────────────
 function ProductDetail({ product, onBack }) {
@@ -17,8 +34,8 @@ function ProductDetail({ product, onBack }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Back */}
         <TouchableOpacity style={pd.backRow} onPress={onBack}>
-          <Text style={pd.backArrow}>←</Text>
-          <Text style={pd.backText}>Volver</Text>
+          <Ionicons name="arrow-back" size={18} color="#888888" />
+          <Text style={pd.backText}>Back</Text>
         </TouchableOpacity>
 
         {/* Product Image Area */}
@@ -47,7 +64,7 @@ function ProductDetail({ product, onBack }) {
           </View>
           {/* Bookmark */}
           <TouchableOpacity style={pd.bookmarkBtn}>
-            <Icon name="bookmark" size={18} color={Colors.textDark} />
+            <Ionicons name="bookmark-outline" size={18} color={Colors.textDark} />
           </TouchableOpacity>
         </View>
 
@@ -317,6 +334,7 @@ const pd = StyleSheet.create({
 // ── SHOP HOME SCREEN ─────────────────────────────────────────
 export default function ShopScreen({ navigate }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   if (selectedProduct) {
     return (
@@ -334,21 +352,43 @@ export default function ShopScreen({ navigate }) {
 
       {/* Shop Header */}
       <View style={s.shopHeader}>
-        <TouchableOpacity>
-          <Icon name="menu" size={22} color={Colors.textDark} />
+        <TouchableOpacity onPress={() => setMenuOpen(true)}>
+          <Ionicons name="menu" size={26} color="#1A1A1A" />
         </TouchableOpacity>
         <Text style={s.shopBrand}>CREATE</Text>
         <View style={s.shopHeaderRight}>
           <TouchableOpacity style={s.headerIconBtn}>
-            <Icon name="search" size={20} color={Colors.textDark} />
+            <Ionicons name="search-outline" size={24} color="#1A1A1A" />
           </TouchableOpacity>
           <TouchableOpacity style={s.headerIconBtn}>
-            <Icon name="heart" size={20} color={Colors.textDark} />
+            <Ionicons name="heart-outline" size={24} color="#1A1A1A" />
           </TouchableOpacity>
           <TouchableOpacity style={s.headerIconBtn}>
-            <Icon name="cart" size={20} color={Colors.textDark} />
-            <View style={s.cartBadge}><Text style={s.cartBadgeText}>0</Text></View>
+            <Ionicons name="bag-outline" size={24} color="#1A1A1A" />
+            <View style={s.cartBadge}><Text style={s.cartBadgeText}>2</Text></View>
           </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Deals Banner */}
+      <View style={s.dealsBanner}>
+        <Text style={s.dealsMain}>UP TO -30%</Text>
+        <Text style={s.dealsSub}> | HEATING DEALS </Text>
+        <Ionicons name="information-circle-outline" size={20} color="#1A1A1A" />
+      </View>
+
+      {/* Back Row */}
+      <TouchableOpacity style={s.backRow}>
+        <Ionicons name="arrow-back" size={18} color="#888888" />
+        <Text style={s.backText}>Back</Text>
+      </TouchableOpacity>
+
+      {/* Products Count */}
+      <View style={s.productsRow}>
+        <Text style={s.productsCount}>128 products</Text>
+        <View style={s.viewToggle}>
+          <TouchableOpacity><MaterialCommunityIcons name="view-sequential-outline" size={22} color="#888888" /></TouchableOpacity>
+          <TouchableOpacity><MaterialCommunityIcons name="view-grid-outline" size={22} color="#1A1A1A" /></TouchableOpacity>
         </View>
       </View>
 
@@ -395,28 +435,60 @@ export default function ShopScreen({ navigate }) {
               onPress={() => setSelectedProduct(product)}
               activeOpacity={0.85}
             >
-              {/* Product image placeholder */}
-              <View style={[s.productImg, {
-                backgroundColor: product.colors[product.defaultColorIndex].hex + '66',
-              }]}>
-                {product.discount > 0 && (
-                  <View style={s.discountBadge}>
-                    <Text style={s.discountBadgeText}>-{product.discount}%</Text>
-                  </View>
-                )}
-                <Text style={s.productEmoji}>☕</Text>
+              <View style={[s.productImg, { backgroundColor: '#F5F0E8' }]}>
+                <View style={s.ukBadge}>
+                  <Text style={s.ukBadgeText}>UK ADAPTER</Text>
+                </View>
+                <TouchableOpacity style={s.productHeart}>
+                  <Ionicons name="heart-outline" size={20} color="#888888" />
+                </TouchableOpacity>
               </View>
               <View style={s.productInfo}>
                 <Text style={s.productName}>{product.name}</Text>
                 <Text style={s.productSubtitle} numberOfLines={1}>{product.subtitle}</Text>
-                <Text style={s.productPrice}>
-                  {product.price.toFixed(2).replace('.', ',')} €
-                </Text>
+                <View style={s.priceRow}>
+                  <Text style={s.productPrice}>£ {product.price.toFixed(2)}</Text>
+                  <Text style={s.originalPrice}>£ {product.originalPrice.toFixed(2)}</Text>
+                  {product.discount > 0 && (
+                    <View style={s.discountBadge}>
+                      <Text style={s.discountBadgeText}>-{product.discount}%</Text>
+                    </View>
+                  )}
+                </View>
               </View>
             </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
+
+      {/* Hamburger Menu Modal */}
+      <Modal visible={menuOpen} animationType="slide" transparent>
+        <View style={s.menuOverlay}>
+          <View style={s.menuContent}>
+            <View style={s.menuHeader}>
+              <Text style={s.menuTitle}>CREATE</Text>
+              <TouchableOpacity onPress={() => setMenuOpen(false)}>
+                <Ionicons name="close" size={24} color="#1A1A1A" />
+              </TouchableOpacity>
+            </View>
+            {HAMBURGER_ITEMS.map((item, i) => (
+              <TouchableOpacity key={i} style={s.menuRow}>
+                <View style={s.menuRowLeft}>
+                  <Text style={s.menuRowText}>{item.label}</Text>
+                  {item.badge && (
+                    <View style={[s.menuBadge, { backgroundColor: item.badgeColor }]}>
+                      <Text style={[s.menuBadgeText, item.badgeColor === '#E0E0E0' && s.menuBadgeTextGray]}>{item.badge}</Text>
+                    </View>
+                  )}
+                </View>
+                {item.expand && (
+                  <Text style={s.menuPlus}>+</Text>
+                )}
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </Modal>
 
       <BottomTabBar active="shop" onPress={navigate} />
     </SafeAreaView>
@@ -429,20 +501,24 @@ const s = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: '#E0D8D0',
   },
   shopBrand: {
-    fontSize: Typography.xl,
-    fontWeight: Typography.extraBold,
-    color: Colors.textDark,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#1A1A1A',
     letterSpacing: 6,
+    textAlign: 'center',
   },
   shopHeaderRight: {
     flexDirection: 'row',
-    gap: Spacing.xs,
+    gap: 16,
     alignItems: 'center',
   },
   headerIconBtn: {
@@ -554,23 +630,21 @@ const s = StyleSheet.create({
     borderBottomColor: Colors.border,
   },
   productImg: {
-    height: 180,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },
   discountBadge: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
-    backgroundColor: Colors.orange,
-    paddingHorizontal: 8,
+    backgroundColor: '#E84E1B',
+    paddingHorizontal: 6,
     paddingVertical: 3,
-    borderRadius: 4,
+    borderRadius: 3,
+    marginLeft: 6,
   },
   discountBadgeText: {
-    fontSize: Typography.xs,
-    color: Colors.textWhite,
-    fontWeight: Typography.bold,
+    fontSize: 10,
+    color: '#FFFFFF',
+    fontWeight: '800',
   },
   productEmoji: { fontSize: 48 },
   productInfo: { padding: 10 },
@@ -582,14 +656,122 @@ const s = StyleSheet.create({
     textTransform: 'uppercase',
   },
   productSubtitle: {
-    fontSize: Typography.xs,
-    color: Colors.textLight,
+    fontSize: 11,
+    color: '#888888',
     marginTop: 2,
   },
-  productPrice: {
-    fontSize: Typography.md,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
+  priceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 6,
+    flexWrap: 'wrap',
   },
+  productPrice: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#1A1A1A',
+  },
+  originalPrice: {
+    fontSize: 11,
+    color: '#AAAAAA',
+    textDecorationLine: 'line-through',
+    marginLeft: 6,
+  },
+  ukBadge: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  ukBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#1A1A1A',
+  },
+  productHeart: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+  },
+  dealsBanner: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#F5F0EB',
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+  },
+  dealsMain: { fontSize: 13, fontWeight: '800', color: '#1A1A1A' },
+  dealsSub: { fontSize: 13, color: '#1A1A1A', flex: 1 },
+  backRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    gap: 6,
+  },
+  backText: { fontSize: 15, color: '#888888' },
+  productsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  productsCount: { fontSize: 18, fontWeight: '700', color: '#1A1A1A' },
+  viewToggle: { flexDirection: 'row', gap: 16 },
+  menuOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'flex-start',
+  },
+  menuContent: {
+    backgroundColor: '#FFFFFF',
+    marginTop: 0,
+  },
+  menuHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0D8D0',
+  },
+  menuTitle: {
+    fontSize: 20,
+    fontWeight: '900',
+    letterSpacing: 6,
+    color: '#1A1A1A',
+  },
+  menuRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 18,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E8E0D6',
+  },
+  menuRowLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  menuRowText: {
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 1,
+    color: '#1A1A1A',
+  },
+  menuBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  menuBadgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  menuBadgeTextGray: { color: '#555555' },
+  menuPlus: { fontSize: 20, color: '#AAAAAA' },
 });

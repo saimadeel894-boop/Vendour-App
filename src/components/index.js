@@ -8,10 +8,12 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, Radius, TAB_BAR_HEIGHT } from '../theme';
 
 // ─────────────────────────────────────────────
-// SVG-like icon primitives (no external deps)
+// SVG-like icon primitives (fallback)
 // ─────────────────────────────────────────────
 export const Icon = ({ name, size = 22, color = Colors.textDark, style }) => {
   const icons = {
@@ -63,14 +65,52 @@ export const Icon = ({ name, size = 22, color = Colors.textDark, style }) => {
 };
 
 // ─────────────────────────────────────────────
-// BOTTOM TAB BAR
+// BOTTOM TAB BAR (pixel-perfect CREATE clone)
 // ─────────────────────────────────────────────
+const TAB_ACTIVE_COLOR = '#1A1A1A';
+const TAB_INACTIVE_COLOR = '#888888';
+
+function TabIcon({ tabKey, isActive, size = 24 }) {
+  const color = isActive ? TAB_ACTIVE_COLOR : TAB_INACTIVE_COLOR;
+  const iconProps = { size, color };
+  switch (tabKey) {
+    case 'home':
+      return isActive ? (
+        <Ionicons name="home" {...iconProps} />
+      ) : (
+        <Ionicons name="home-outline" {...iconProps} />
+      );
+    case 'magazine':
+      return isActive ? (
+        <MaterialCommunityIcons name="newspaper-variant" {...iconProps} />
+      ) : (
+        <MaterialCommunityIcons name="newspaper-variant-outline" {...iconProps} />
+      );
+    case 'shop':
+      return isActive ? (
+        <MaterialCommunityIcons name="storefront" {...iconProps} />
+      ) : (
+        <MaterialCommunityIcons name="storefront-outline" {...iconProps} />
+      );
+    case 'recipes':
+      return <MaterialCommunityIcons name="chef-hat" {...iconProps} />;
+    case 'account':
+      return isActive ? (
+        <Ionicons name="person" {...iconProps} />
+      ) : (
+        <Ionicons name="person-outline" {...iconProps} />
+      );
+    default:
+      return <Ionicons name="ellipse-outline" {...iconProps} />;
+  }
+}
+
 const TABS = [
-  { key: 'home',     label: 'Home',     icon: 'home'     },
-  { key: 'magazine', label: 'Magazine', icon: 'magazine' },
-  { key: 'shop',     label: 'Shop',     icon: 'shop'     },
-  { key: 'recipes',  label: 'Recipes',  icon: 'recipes'  },
-  { key: 'account',  label: 'Account',  icon: 'account'  },
+  { key: 'home', label: 'Home' },
+  { key: 'magazine', label: 'Magazine' },
+  { key: 'shop', label: 'Shop' },
+  { key: 'recipes', label: 'Recipes' },
+  { key: 'account', label: 'Account' },
 ];
 
 export function BottomTabBar({ active, onPress }) {
@@ -85,11 +125,7 @@ export function BottomTabBar({ active, onPress }) {
             onPress={() => onPress(t.key)}
             activeOpacity={0.7}
           >
-            <Icon
-              name={t.icon}
-              size={20}
-              color={isActive ? Colors.tabActive : Colors.tabInactive}
-            />
+            <TabIcon tabKey={t.key} isActive={isActive} size={24} />
             <Text style={[tbStyles.label, isActive && tbStyles.labelActive]}>
               {t.label}
             </Text>
@@ -103,12 +139,12 @@ export function BottomTabBar({ active, onPress }) {
 const tbStyles = StyleSheet.create({
   bar: {
     flexDirection: 'row',
-    backgroundColor: Colors.tabBg,
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderTopColor: Colors.border,
-    height: TAB_BAR_HEIGHT + (Platform.OS === 'ios' ? 20 : 0),
+    borderTopColor: '#E8E0D6',
+    height: 60 + (Platform.OS === 'ios' ? 24 : 0),
     paddingTop: 8,
-    paddingBottom: Platform.OS === 'ios' ? 20 : 8,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 8,
     paddingHorizontal: 4,
   },
   item: {
@@ -116,21 +152,22 @@ const tbStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 3,
-    borderRadius: Radius.full,
+    borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 4,
   },
   itemActive: {
-    backgroundColor: Colors.tabActiveBg,
+    backgroundColor: '#F0EDE8',
+    paddingHorizontal: 18,
   },
   label: {
-    fontSize: Typography.xs,
-    color: Colors.tabInactive,
-    fontWeight: Typography.medium,
+    fontSize: 11,
+    color: TAB_INACTIVE_COLOR,
+    fontWeight: '400',
   },
   labelActive: {
-    color: Colors.tabActive,
-    fontWeight: Typography.bold,
+    color: TAB_ACTIVE_COLOR,
+    fontWeight: '700',
   },
 });
 
@@ -141,7 +178,7 @@ export function DiscountBanner({ voucher, percent }) {
   return (
     <View style={dbStyles.bar}>
       <Text style={dbStyles.text}>
-        {percent}% DISCOUNT·VOUCHER:{' '}
+        {percent}% DISCOUNT-VOUCHER:{' '}
         <Text style={dbStyles.code}>{voucher}</Text>
       </Text>
     </View>
@@ -150,19 +187,19 @@ export function DiscountBanner({ voucher, percent }) {
 
 const dbStyles = StyleSheet.create({
   bar: {
-    backgroundColor: Colors.bgWhite,
+    backgroundColor: '#FFFFFF',
     paddingVertical: 9,
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: '#E0D8D0',
   },
   text: {
-    fontSize: Typography.sm,
-    color: Colors.textDark,
-    letterSpacing: 0.3,
+    fontSize: 12,
+    color: '#1A1A1A',
+    textAlign: 'center',
   },
   code: {
-    fontWeight: Typography.bold,
+    fontWeight: '800',
   },
 });
 
@@ -276,16 +313,20 @@ const pbStyles = StyleSheet.create({
 });
 
 // ─────────────────────────────────────────────
-// MENU ROW (Account screen)
+// MENU ROW (Account screen) — supports vector icons
 // ─────────────────────────────────────────────
-export function MenuRow({ icon, label, onPress }) {
+export function MenuRow({ icon, label, onPress, iconComponent }) {
   return (
     <TouchableOpacity style={mrStyles.row} onPress={onPress} activeOpacity={0.7}>
       <View style={mrStyles.left}>
-        <Icon name={icon} size={18} color={Colors.textMid} />
+        {iconComponent ? (
+          <View style={{ marginRight: 16 }}>{iconComponent}</View>
+        ) : icon ? (
+          <Icon name={icon} size={18} color={Colors.textMid} style={{ marginRight: 16 }} />
+        ) : null}
         <Text style={mrStyles.label}>{label}</Text>
       </View>
-      <Icon name="chevron" size={18} color={Colors.textLight} />
+      <Ionicons name="chevron-forward" size={18} color="#CCCCCC" />
     </TouchableOpacity>
   );
 }
@@ -295,20 +336,22 @@ const mrStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: Spacing.md,
+    paddingVertical: 18,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.borderLight,
+    borderBottomColor: '#F0EBE5',
     backgroundColor: Colors.bgWhite,
   },
   left: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.md,
   },
   label: {
-    fontSize: Typography.md,
+    fontSize: 15,
+    fontWeight: '400',
     color: Colors.textDark,
-    fontWeight: Typography.medium,
   },
 });
+
+// Export vector icon sets for screens
+export { Ionicons, MaterialCommunityIcons };

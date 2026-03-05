@@ -1,23 +1,19 @@
-// src/screens/CreateSceneScreen.js
+// src/screens/CreateSceneScreen.js — SECTION 8 pixel-perfect
 import React from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
   SafeAreaView, StatusBar, ScrollView,
 } from 'react-native';
-import { Colors, Typography, Spacing, Radius } from '../theme';
-import { Icon } from '../components';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function CreateSceneScreen({ navigate }) {
   return (
     <SafeAreaView style={s.root}>
       <StatusBar barStyle="dark-content" />
 
-      {/* Header */}
-      <View style={s.header}>
-        <TouchableOpacity onPress={() => navigate('home')}>
-          <Text style={s.cancelText}>Cancel</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={s.cancelBtn} onPress={() => navigate('home')}>
+        <Text style={s.cancelText}>Cancel</Text>
+      </TouchableOpacity>
 
       <ScrollView contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
         <Text style={s.title}>Create Scene</Text>
@@ -26,25 +22,30 @@ export default function CreateSceneScreen({ navigate }) {
         <View style={s.card}>
           <View style={s.cardHeader}>
             <Text style={s.cardLabel}>If</Text>
-            <TouchableOpacity style={s.addBtn}>
-              <Text style={s.addBtnText}>＋</Text>
+            <TouchableOpacity style={s.orangePlus}>
+              <Text style={s.orangePlusText}>+</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={s.dropdownRow}>
-            <Text style={s.dropdownText}>When any condition is met ∨</Text>
+            <Text style={s.dropdownText}>When any condition is met</Text>
+            <Ionicons name="chevron-down" size={18} color="#555555" />
           </TouchableOpacity>
-          <Text style={s.placeholder}>Add Condition</Text>
+          <View style={s.placeholderBox}>
+            <Text style={s.placeholderText}>Add Condition</Text>
+          </View>
         </View>
 
         {/* Card 2: Then */}
         <View style={s.card}>
           <View style={s.cardHeader}>
             <Text style={s.cardLabel}>Then</Text>
-            <TouchableOpacity style={s.addBtn}>
-              <Text style={s.addBtnText}>＋</Text>
+            <TouchableOpacity style={s.orangePlus}>
+              <Text style={s.orangePlusText}>+</Text>
             </TouchableOpacity>
           </View>
-          <Text style={s.placeholder}>Add Task</Text>
+          <View style={s.placeholderBox}>
+            <Text style={s.placeholderText}>Add Task</Text>
+          </View>
         </View>
 
         {/* Card 3: Validity Scope */}
@@ -53,7 +54,7 @@ export default function CreateSceneScreen({ navigate }) {
             <Text style={s.cardLabel}>Validity Scope</Text>
             <View style={s.cardRight}>
               <Text style={s.cardValue}>All day</Text>
-              <Icon name="chevron" size={16} color={Colors.textLight} />
+              <Ionicons name="chevron-forward" size={18} color="#888888" />
             </View>
           </TouchableOpacity>
         </View>
@@ -65,11 +66,11 @@ export default function CreateSceneScreen({ navigate }) {
             onPress={() => navigate('showarea')}
           >
             <Text style={s.cardLabel}>Display Area</Text>
-            <Icon name="chevron" size={16} color={Colors.textLight} />
+            <Ionicons name="chevron-forward" size={18} color="#888888" />
           </TouchableOpacity>
         </View>
 
-        <View style={{ height: 80 }} />
+        <View style={{ height: 100 }} />
       </ScrollView>
 
       {/* Save button */}
@@ -87,70 +88,78 @@ export default function CreateSceneScreen({ navigate }) {
 }
 
 const s = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.bgWhite },
-  header: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
+  root: { flex: 1, backgroundColor: '#F5F5F5' },
+  cancelBtn: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   cancelText: {
-    fontSize: Typography.md,
-    color: Colors.textDark,
-    fontWeight: Typography.medium,
+    fontSize: 16,
+    color: '#888888',
   },
   content: {
-    paddingHorizontal: Spacing.lg,
+    paddingHorizontal: 16,
+    paddingLeft: 16,
   },
   title: {
-    fontSize: Typography.xxxl,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
-    marginBottom: Spacing.xl,
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#1A1A1A',
+    marginLeft: 16,
+    marginBottom: 16,
   },
   card: {
-    width: '100%',
-    backgroundColor: Colors.bgWhite,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: Radius.md,
-    padding: Spacing.lg,
-    marginBottom: Spacing.md,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 20,
+    marginHorizontal: 16,
+    marginBottom: 16,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: Spacing.sm,
   },
   cardLabel: {
-    fontSize: Typography.md,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#1A1A1A',
   },
-  addBtn: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.orange,
+  orangePlus: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#E84E1B',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  addBtnText: {
-    color: Colors.bgWhite,
-    fontSize: 18,
-    fontWeight: Typography.bold,
-    lineHeight: 20,
+  orangePlusText: {
+    fontSize: 20,
+    color: '#FFFFFF',
+    fontWeight: '700',
   },
   dropdownRow: {
-    marginBottom: Spacing.sm,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
   },
   dropdownText: {
-    fontSize: Typography.base,
-    color: Colors.textDark,
+    fontSize: 14,
+    color: '#555555',
   },
-  placeholder: {
-    fontSize: Typography.base,
-    color: Colors.textPlaceholder,
-    marginTop: Spacing.xs,
+  placeholderBox: {
+    borderWidth: 1,
+    borderColor: '#E8E0D6',
+    borderRadius: 10,
+    paddingVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderText: {
+    fontSize: 15,
+    color: '#CCCCCC',
+    textAlign: 'center',
   },
   cardRow: {
     flexDirection: 'row',
@@ -160,29 +169,30 @@ const s = StyleSheet.create({
   cardRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.xs,
+    gap: 4,
   },
   cardValue: {
-    fontSize: Typography.base,
-    color: Colors.textLight,
+    fontSize: 14,
+    color: '#888888',
   },
   footer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    padding: Spacing.lg,
-    backgroundColor: Colors.bgWhite,
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+    backgroundColor: '#F5F5F5',
   },
   saveBtn: {
-    backgroundColor: Colors.orange,
-    borderRadius: Radius.full,
-    paddingVertical: 17,
+    backgroundColor: '#E84E1B',
+    borderRadius: 12,
+    paddingVertical: 18,
     alignItems: 'center',
   },
   saveBtnText: {
-    color: Colors.bgWhite,
-    fontSize: Typography.lg,
-    fontWeight: Typography.bold,
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
 });
