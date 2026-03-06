@@ -23,19 +23,26 @@
 
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import LoginScreen       from './src/screens/LoginScreen';
-import HomeScreen        from './src/screens/HomeScreen';
-import ShopScreen        from './src/screens/ShopScreen';
-import MagazineScreen    from './src/screens/MagazineScreen';
-import RecipesScreen     from './src/screens/RecipesScreen';
-import AccountScreen     from './src/screens/AccountScreen';
-import AddHomeScreen     from './src/screens/AddHomeScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import ShopScreen from './src/screens/ShopScreen';
+import MagazineScreen from './src/screens/MagazineScreen';
+import RecipesScreen from './src/screens/RecipesScreen';
+import AccountScreen from './src/screens/AccountScreen';
+import AddHomeScreen from './src/screens/AddHomeScreen';
 import AutomationsScreen from './src/screens/AutomationsScreen';
-import TapToRunScreen    from './src/screens/TapToRunScreen';
+import TapToRunScreen from './src/screens/TapToRunScreen';
 import CreateSceneScreen from './src/screens/CreateSceneScreen';
-import AddDeviceScreen   from './src/screens/AddDeviceScreen';
-import ShowAreaScreen    from './src/screens/ShowAreaScreen';
+import AddDeviceScreen from './src/screens/AddDeviceScreen';
+import ShowAreaScreen from './src/screens/ShowAreaScreen';
+import ShopMenuScreen from './src/screens/ShopMenuScreen';
+import ProductCategoryScreen from './src/screens/ProductCategoryScreen';
+import MyInformationScreen from './src/screens/account/MyInformationScreen';
+import OrderHistoryScreen from './src/screens/account/OrderHistoryScreen';
+import MyAddressesScreen from './src/screens/account/MyAddressesScreen';
+import SettingsScreen from './src/screens/account/SettingsScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('login');
@@ -44,27 +51,34 @@ export default function App() {
 
   const renderScreen = () => {
     switch (screen) {
-      case 'login':       return <LoginScreen       navigate={navigate} />;
-      case 'home':        return <HomeScreen        navigate={navigate} />;
-      case 'shop':        return <ShopScreen        navigate={navigate} />;
-      case 'magazine':    return <MagazineScreen    navigate={navigate} />;
-      case 'recipes':     return <RecipesScreen     navigate={navigate} />;
-      case 'account':     return <AccountScreen     navigate={navigate} />;
-      case 'addHome':     return <AddHomeScreen     navigate={navigate} />;
-      case 'editHome':    return <AddHomeScreen     navigate={navigate} editMode />;
+      case 'login': return <LoginScreen navigate={navigate} />;
+      case 'home': return <HomeScreen navigate={navigate} />;
+      case 'shop': return <ShopScreen navigate={navigate} />;
+      case 'magazine': return <MagazineScreen navigate={navigate} />;
+      case 'recipes': return <RecipesScreen navigate={navigate} />;
+      case 'account': return <AccountScreen navigate={navigate} />;
+      case 'addHome': return <AddHomeScreen navigate={navigate} />;
+      case 'editHome': return <AddHomeScreen navigate={navigate} editMode />;
       case 'automations': return <AutomationsScreen navigate={navigate} />;
-      case 'taptorun':    return <TapToRunScreen    navigate={navigate} />;
+      case 'taptorun': return <TapToRunScreen navigate={navigate} />;
       case 'createscene': return <CreateSceneScreen navigate={navigate} />;
-      case 'addDevice':   return <AddDeviceScreen   navigate={navigate} />;
-      case 'showarea':    return <ShowAreaScreen    navigate={navigate} />;
-      default:            return <HomeScreen        navigate={navigate} />;
+      case 'addDevice': return <AddDeviceScreen navigate={navigate} />;
+      case 'showarea': return <ShowAreaScreen navigate={navigate} />;
+      case 'shopMenu': return <ShopMenuScreen navigate={navigate} />;
+      case 'productCategory': return <ProductCategoryScreen navigate={navigate} />;
+      case 'productDetail': return <ShopScreen navigate={navigate} />;
+      case 'myInformation': return <MyInformationScreen navigate={navigate} />;
+      case 'orderHistory': return <OrderHistoryScreen navigate={navigate} />;
+      case 'myAddresses': return <MyAddressesScreen navigate={navigate} />;
+      case 'settings': return <SettingsScreen navigate={navigate} />;
+      default: return <HomeScreen navigate={navigate} />;
     }
   };
 
   return (
-    <View style={styles.root}>
+    <SafeAreaProvider>
       {renderScreen()}
-    </View>
+    </SafeAreaProvider>
   );
 }
 

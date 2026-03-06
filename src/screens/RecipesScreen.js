@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar,
+  ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Colors, Typography, Spacing } from '../theme';
 import { BottomTabBar, Icon } from '../components';
 import { recipesData } from '../data';
@@ -18,8 +20,8 @@ export default function RecipesScreen({ navigate }) {
   };
 
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
 
       {/* ── Header ── */}
       <View style={s.header}>

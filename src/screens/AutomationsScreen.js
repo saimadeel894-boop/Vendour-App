@@ -2,14 +2,15 @@
 import React from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  SafeAreaView, StatusBar,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function AutomationsScreen({ navigate }) {
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
 
       <View style={s.header}>
         <TouchableOpacity onPress={() => navigate('home')}>

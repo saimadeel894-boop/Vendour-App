@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  SafeAreaView, StatusBar, TextInput, Platform,
+  TextInput, Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { Typography } from '../theme';
 
@@ -12,8 +14,8 @@ export default function AddHomeScreen({ navigate }) {
   const canSave = houseName.trim().length > 0;
 
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
 
       <View style={s.header}>
         <TouchableOpacity style={s.backBtn} onPress={() => navigate('home')}>

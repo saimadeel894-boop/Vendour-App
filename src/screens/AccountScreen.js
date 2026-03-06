@@ -2,8 +2,10 @@
 import React from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar,
+  ScrollView, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomTabBar, MenuRow } from '../components';
@@ -11,8 +13,8 @@ import { userData } from '../data';
 
 export default function AccountScreen({ navigate }) {
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
 
@@ -33,12 +35,12 @@ export default function AccountScreen({ navigate }) {
           <MenuRow
             iconComponent={<Ionicons name="person-outline" size={20} color="#1A1A1A" />}
             label="My information"
-            onPress={() => {}}
+            onPress={() => navigate('myInformation')}
           />
           <MenuRow
             iconComponent={<Ionicons name="lock-closed-outline" size={20} color="#1A1A1A" />}
             label="Account and security"
-            onPress={() => {}}
+            onPress={() => Alert.alert('Coming soon')}
           />
         </View>
 
@@ -48,27 +50,27 @@ export default function AccountScreen({ navigate }) {
           <MenuRow
             iconComponent={<Ionicons name="location-outline" size={20} color="#1A1A1A" />}
             label="My addresses"
-            onPress={() => {}}
+            onPress={() => navigate('myAddresses')}
           />
           <MenuRow
             iconComponent={<Ionicons name="time-outline" size={20} color="#1A1A1A" />}
             label="Order History"
-            onPress={() => {}}
+            onPress={() => navigate('orderHistory')}
           />
           <MenuRow
             iconComponent={<MaterialCommunityIcons name="package-variant" size={20} color="#1A1A1A" />}
             label="Returns"
-            onPress={() => {}}
+            onPress={() => Alert.alert('Coming soon')}
           />
           <MenuRow
             iconComponent={<Ionicons name="shield-checkmark-outline" size={20} color="#1A1A1A" />}
             label="Guarantee registry"
-            onPress={() => {}}
+            onPress={() => Alert.alert('Coming soon')}
           />
           <MenuRow
             iconComponent={<MaterialCommunityIcons name="ticket-percent-outline" size={20} color="#1A1A1A" />}
             label="Discount vouchers"
-            onPress={() => {}}
+            onPress={() => Alert.alert('Coming soon')}
           />
         </View>
 
@@ -77,25 +79,25 @@ export default function AccountScreen({ navigate }) {
           <MenuRow
             iconComponent={<Ionicons name="headset-outline" size={20} color="#1A1A1A" />}
             label="Contact"
-            onPress={() => {}}
+            onPress={() => Alert.alert('Contact', 'contact@vendom.com')}
           />
           <MenuRow
             iconComponent={<Ionicons name="settings-outline" size={20} color="#1A1A1A" />}
             label="Settings"
-            onPress={() => {}}
+            onPress={() => navigate('settings')}
           />
           <MenuRow
             iconComponent={<Ionicons name="help-circle-outline" size={20} color="#1A1A1A" />}
             label="About"
-            onPress={() => {}}
+            onPress={() => Alert.alert('About', 'VENDOM App v1.0.0')}
           />
         </View>
 
         {/* Text-only rows */}
         <View style={s.menuGroup}>
-          <MenuRow label="Social media" onPress={() => {}} iconComponent={null} />
-          <MenuRow label="Rate this app" onPress={() => {}} iconComponent={null} />
-          <MenuRow label="Recommend this app" onPress={() => {}} iconComponent={null} />
+          <MenuRow label="Social media" onPress={() => Alert.alert('Coming soon')} iconComponent={null} />
+          <MenuRow label="Rate this app" onPress={() => Alert.alert('Coming soon')} iconComponent={null} />
+          <MenuRow label="Recommend this app" onPress={() => Alert.alert('Coming soon')} iconComponent={null} />
         </View>
 
         {/* Log out */}

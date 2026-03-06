@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar, Modal,
+  ScrollView, Modal,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W } from '../theme';
@@ -346,8 +348,8 @@ export default function ShopScreen({ navigate }) {
   }
 
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
       <DiscountBanner voucher={appConfig.discountVoucher} percent={appConfig.discountPercent} />
 
       {/* Shop Header */}
@@ -355,7 +357,7 @@ export default function ShopScreen({ navigate }) {
         <TouchableOpacity onPress={() => setMenuOpen(true)}>
           <Ionicons name="menu" size={26} color="#1A1A1A" />
         </TouchableOpacity>
-        <Text style={s.shopBrand}>CREATE</Text>
+        <Text style={s.shopBrand}>VENDOM</Text>
         <View style={s.shopHeaderRight}>
           <TouchableOpacity style={s.headerIconBtn}>
             <Ionicons name="search-outline" size={24} color="#1A1A1A" />
@@ -466,7 +468,7 @@ export default function ShopScreen({ navigate }) {
         <View style={s.menuOverlay}>
           <View style={s.menuContent}>
             <View style={s.menuHeader}>
-              <Text style={s.menuTitle}>CREATE</Text>
+              <Text style={s.menuTitle}>VENDOM</Text>
               <TouchableOpacity onPress={() => setMenuOpen(false)}>
                 <Ionicons name="close" size={24} color="#1A1A1A" />
               </TouchableOpacity>

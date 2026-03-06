@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar, ActivityIndicator,
+  ScrollView, ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Colors, Typography, Spacing, Radius, Shadow } from '../theme';
 import { BottomTabBar } from '../components';
 import { articlesData } from '../data';
@@ -14,7 +16,7 @@ export default function MagazineScreen({ navigate }) {
 
   if (loading) {
     return (
-      <SafeAreaView style={s.loadRoot}>
+      <SafeAreaView style={s.loadRoot} edges={['top', 'bottom']}>
         <ActivityIndicator size="large" color={Colors.textDark} />
         <Text style={s.loadText}>Loading</Text>
         <BottomTabBar active="magazine" onPress={navigate} />
@@ -23,8 +25,8 @@ export default function MagazineScreen({ navigate }) {
   }
 
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
 

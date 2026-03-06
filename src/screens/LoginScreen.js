@@ -1,19 +1,20 @@
 // src/screens/LoginScreen.js
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  SafeAreaView, StatusBar, Platform,
+  View, Text, StyleSheet, TouchableOpacity, Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Colors, Typography, Spacing, Radius, SCREEN_H } from '../theme';
 
 export default function LoginScreen({ navigate }) {
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.bgHero} />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="light" />
 
       {/* ── Dark Hero ── */}
       <View style={s.hero}>
-        <Text style={s.brand}>CREATE</Text>
+        <Text style={s.brand}>VENDOM</Text>
 
         {/* Illustrated toaster */}
         <View style={s.toasterScene}>

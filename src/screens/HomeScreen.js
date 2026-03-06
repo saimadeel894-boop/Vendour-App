@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, SafeAreaView, StatusBar, Platform,
+  ScrollView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W } from '../theme';
@@ -41,8 +43,8 @@ export default function HomeScreen({ navigate }) {
   };
 
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="dark-content" />
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
+      <StatusBar style="dark" />
 
       {/* ── Gradient Background (simulated: #F5EDE3 -> #F2C4C4) ── */}
       <View style={s.gradientBg}>
@@ -322,17 +324,18 @@ const s = StyleSheet.create({
     bottom: 24,
     right: 20,
     backgroundColor: '#FFFFFF',
-    paddingVertical: 16,
     paddingHorizontal: 28,
-    borderRadius: 20,
+    paddingVertical: 14,
+    borderRadius: 999,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
     shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
     elevation: 6,
+    zIndex: 100,
   },
   fabPlus: {
     fontSize: 22,
