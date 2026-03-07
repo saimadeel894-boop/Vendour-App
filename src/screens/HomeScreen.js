@@ -68,7 +68,10 @@ export default function HomeScreen({ navigate }) {
           <Ionicons name="settings-outline" size={24} color="#1A1A1A" />
         </TouchableOpacity>
         <Text style={s.headerDash}>– –</Text>
-        <TouchableOpacity style={s.headerBtn}>
+        <TouchableOpacity
+          style={{ padding: 4 }}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
           <Ionicons name="bulb-outline" size={24} color="#1A1A1A" />
         </TouchableOpacity>
       </View>
@@ -193,11 +196,11 @@ const s = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 14,
-    paddingBottom: 8,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    width: '100%',
   },
   headerBtn: {
     width: 40,

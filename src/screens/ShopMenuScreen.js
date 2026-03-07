@@ -1,16 +1,28 @@
 import React from 'react';
 import {
-    View, Text, ScrollView,
-    TouchableOpacity, StyleSheet
+    View,
+    Text,
+    ScrollView,
+    TouchableOpacity,
+    StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 
 const menuItems = [
-    { label: 'HEATING DEALS', badge: 'SALE', badgeColor: '#E84E1B' },
-    { label: 'SKINCARE', badge: 'NEW', badgeColor: '#888888' },
-    { label: 'BABY', badge: 'NEW', badgeColor: '#888888' },
+    {
+        label: 'HEATING DEALS', badge: 'SALE',
+        badgeColor: '#E84E1B', hasArrow: false
+    },
+    {
+        label: 'SKINCARE', badge: 'NEW',
+        badgeColor: '#666666', hasArrow: false
+    },
+    {
+        label: 'BABY', badge: 'NEW',
+        badgeColor: '#666666', hasArrow: false
+    },
     { label: 'NEW IN', badge: null, hasArrow: false },
     { label: 'FRIDGES', hasArrow: true },
     { label: 'KITCHEN', hasArrow: true },
@@ -20,8 +32,16 @@ const menuItems = [
     { label: 'AUDIO AND TV', hasArrow: true },
     { label: 'TRAVEL SUITCASES', hasArrow: true },
     { label: 'GARDEN AND OUTDOOR', hasArrow: true },
-    { label: 'BEDROOM', hasArrow: true },
-    { label: 'BATHROOM', hasArrow: true },
+    { label: 'HOME AND CLEANING', hasArrow: true },
+    { label: 'CLIMATE APPLIANCES', hasArrow: true },
+];
+
+const footerLinks = [
+    'FAQS',
+    'NEWSLETTER',
+    'VENDOM BUSINESS',
+    'GENERAL CONDITIONS',
+    'STORE LOCATOR',
 ];
 
 export default function ShopMenuScreen({ navigate }) {
@@ -35,6 +55,7 @@ export default function ShopMenuScreen({ navigate }) {
                 <TouchableOpacity
                     style={s.closeBtn}
                     onPress={() => navigate('shop')}
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 >
                     <Ionicons name="close" size={24} color="#1A1A1A" />
                 </TouchableOpacity>
@@ -42,13 +63,17 @@ export default function ShopMenuScreen({ navigate }) {
 
             <View style={s.divider} />
 
-            {/* Menu List */}
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 40 }}
+            >
+                {/* Main category rows */}
                 {menuItems.map((item, index) => (
                     <TouchableOpacity
                         key={index}
                         style={s.row}
                         onPress={() => navigate('productCategory')}
+                        activeOpacity={0.6}
                     >
                         <View style={s.rowLeft}>
                             <Text style={s.rowLabel}>{item.label}</Text>
@@ -66,6 +91,22 @@ export default function ShopMenuScreen({ navigate }) {
                         )}
                     </TouchableOpacity>
                 ))}
+
+                {/* Spacer between categories and footer */}
+                <View style={s.footerSpacer} />
+
+                {/* Footer links — smaller text, no arrows */}
+                {footerLinks.map((link, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={s.footerRow}
+                        activeOpacity={0.6}
+                    >
+                        <Text style={s.footerLabel}>{link}</Text>
+                    </TouchableOpacity>
+                ))}
+
+                <View style={{ height: 32 }} />
             </ScrollView>
         </SafeAreaView>
     );
@@ -76,6 +117,8 @@ const s = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
     },
+
+    // Header
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -98,8 +141,10 @@ const s = StyleSheet.create({
     },
     divider: {
         height: 1,
-        backgroundColor: '#E8E0D6',
+        backgroundColor: '#E0D8D0',
     },
+
+    // Category rows
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -117,22 +162,41 @@ const s = StyleSheet.create({
     rowLabel: {
         fontSize: 14,
         fontWeight: '700',
-        letterSpacing: 1,
+        letterSpacing: 0.8,
         color: '#1A1A1A',
     },
     badge: {
         paddingHorizontal: 8,
         paddingVertical: 3,
-        borderRadius: 4,
+        borderRadius: 3,
     },
     badgeText: {
         fontSize: 10,
         fontWeight: '800',
         color: '#FFFFFF',
+        letterSpacing: 0.5,
     },
     plus: {
         fontSize: 22,
         color: '#AAAAAA',
         fontWeight: '300',
+    },
+
+    // Footer section
+    footerSpacer: {
+        height: 32,
+        backgroundColor: '#FFFFFF',
+    },
+    footerRow: {
+        paddingVertical: 14,
+        paddingHorizontal: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F0EBE5',
+    },
+    footerLabel: {
+        fontSize: 13,
+        fontWeight: '500',
+        color: '#555555',
+        letterSpacing: 0.3,
     },
 });
