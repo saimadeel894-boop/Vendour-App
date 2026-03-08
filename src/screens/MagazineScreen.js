@@ -33,7 +33,7 @@ export default function MagazineScreen({ navigate }) {
 
         {/* ── Article Cards ── */}
         {articlesData.map((article, index) => (
-          <TouchableOpacity key={article.id} style={s.articleCard} activeOpacity={0.9}>
+          <TouchableOpacity key={article.id} style={s.articleCard} activeOpacity={0.9} onPress={() => navigate('magazineDetail')}>
             {/* Category label ABOVE image */}
             <Text style={s.categoryLabel}>{article.category}</Text>
 

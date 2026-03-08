@@ -42,7 +42,7 @@ export default function RecipesScreen({ navigate }) {
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
         {recipes.map(recipe => (
-          <View key={recipe.id} style={s.recipeCard}>
+          <TouchableOpacity key={recipe.id} style={s.recipeCard} onPress={() => navigate('recipeDetail')} activeOpacity={0.9}>
             {/* Image area - white/empty placeholder */}
             <View style={s.recipeImg} />
 
@@ -81,7 +81,7 @@ export default function RecipesScreen({ navigate }) {
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
 

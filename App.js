@@ -58,6 +58,11 @@ import HeatingDealsScreen from './src/screens/shop/HeatingDealsScreen';
 import SkincareScreen from './src/screens/shop/SkincareScreen';
 import BabyScreen from './src/screens/shop/BabyScreen';
 import NewInScreen from './src/screens/shop/NewInScreen';
+import MagazineDetailScreen from './src/screens/MagazineDetailScreen';
+import RecipeDetailScreen from './src/screens/RecipeDetailScreen';
+import SearchScreen from './src/screens/SearchScreen';
+import CartScreen from './src/screens/CartScreen';
+import WishlistScreen from './src/screens/WishlistScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('login');
@@ -100,6 +105,11 @@ export default function App() {
       case 'skincare': return <SkincareScreen navigate={navigate} />;
       case 'baby': return <BabyScreen navigate={navigate} />;
       case 'newIn': return <NewInScreen navigate={navigate} />;
+      case 'magazineDetail': return <MagazineDetailScreen navigate={navigate} />;
+      case 'recipeDetail': return <RecipeDetailScreen navigate={navigate} />;
+      case 'search': return <SearchScreen navigate={navigate} />;
+      case 'cart': return <CartScreen navigate={navigate} />;
+      case 'wishlist': return <WishlistScreen navigate={navigate} />;
       default: return <HomeScreen navigate={navigate} />;
     }
   };
