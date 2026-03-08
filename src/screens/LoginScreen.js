@@ -59,7 +59,7 @@ export default function LoginScreen({ navigate }) {
           <Text style={s.btnDarkText}>Sign in</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={s.btnOutline} activeOpacity={0.85}>
+        <TouchableOpacity style={s.btnOutline} activeOpacity={0.85} onPress={() => navigate('register')}>
           <Text style={s.btnOutlineText}>Register</Text>
         </TouchableOpacity>
 
@@ -68,6 +68,10 @@ export default function LoginScreen({ navigate }) {
           activeOpacity={0.7}
         >
           <Text style={s.guestText}>Continue as guest</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigate('forgotPassword')} activeOpacity={0.7}>
+          <Text style={s.forgotText}>Forgot password?</Text>
         </TouchableOpacity>
 
         <View style={s.vendomSeparator} />
@@ -233,6 +237,13 @@ const s = StyleSheet.create({
     fontWeight: Typography.bold,
     textAlign: 'center',
     paddingVertical: 6,
+  },
+  forgotText: {
+    color: '#888888',
+    fontSize: 14,
+    textAlign: 'center',
+    paddingVertical: 8,
+    marginTop: 4,
   },
   vendomSeparator: {
     height: 1,

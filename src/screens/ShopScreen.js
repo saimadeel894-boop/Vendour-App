@@ -35,21 +35,23 @@ export default function ShopScreen({ navigate }) {
 
         {/* Right - fixed 44px */}
         <View style={{
-          width: 44, flexDirection: 'row',
+          width: 88, flexDirection: 'row',
           alignItems: 'center', justifyContent: 'flex-end', gap: 14
         }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('search')}>
             <Ionicons name="search-outline" size={22} color="#1A1A1A" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigate('wishlist')}>
             <Ionicons name="heart-outline" size={22} color="#1A1A1A" />
           </TouchableOpacity>
-          <View>
-            <Ionicons name="bag-outline" size={22} color="#1A1A1A" />
-            <View style={s.cartBadge}>
-              <Text style={s.cartBadgeText}>2</Text>
+          <TouchableOpacity onPress={() => navigate('cart')}>
+            <View>
+              <Ionicons name="bag-outline" size={22} color="#1A1A1A" />
+              <View style={s.cartBadge}>
+                <Text style={s.cartBadgeText}>2</Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -93,7 +95,7 @@ export default function ShopScreen({ navigate }) {
               <Text style={s.heroProductEmoji}>❄️</Text>
             </View>
           </View>
-          <TouchableOpacity style={s.editorialBtn}>
+          <TouchableOpacity style={s.editorialBtn} onPress={() => navigate('magazine')}>
             <Text style={s.editorialText}>EXPLORE THE EDITORIAL</Text>
           </TouchableOpacity>
         </View>

@@ -24,6 +24,7 @@ const FAB_MENU = [
 export default function HomeScreen({ navigate }) {
   const [devices, setDevices] = useState(devicesData);
   const [fabOpen, setFabOpen] = useState(false);
+  const [homeName, setHomeName] = useState('My Home');
 
   const handleToggle = (id) => {
     setDevices(prev =>
@@ -66,12 +67,18 @@ export default function HomeScreen({ navigate }) {
 
         {/* ── Header ── */}
         <View style={s.header}>
-          <TouchableOpacity style={s.headerBtn}>
-            <Ionicons name="settings-outline" size={24} color="#1A1A1A" />
-          </TouchableOpacity>
-          <Text style={s.headerDash}>– –</Text>
+          <View style={s.headerLeft}>
+            <TouchableOpacity style={s.headerBtn} onPress={() => navigate('settings')}>
+              <Ionicons name="settings-outline" size={24} color="#1A1A1A" />
+            </TouchableOpacity>
+            <Text style={s.roomsHint}>— —</Text>
+          </View>
+
+          <Text style={s.homeName}>{homeName}</Text>
+
           <TouchableOpacity
             style={{ padding: 4 }}
+            onPress={() => navigate('notifications')}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
             <Ionicons name="bulb-outline" size={24} color="#1A1A1A" />
@@ -203,10 +210,25 @@ const s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  headerDash: {
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  roomsHint: {
     fontSize: 14,
-    color: '#888888',
+    color: '#AAAAAA',
     letterSpacing: 4,
+  },
+  homeName: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    zIndex: -1,
   },
   scroll: { flex: 1 },
   homeTitle: {
