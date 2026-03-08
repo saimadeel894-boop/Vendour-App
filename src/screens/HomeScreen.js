@@ -1,16 +1,17 @@
-// src/screens/HomeScreen.js
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView,
+  ScrollView, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W } from '../theme';
+import { Colors, Typography, Spacing, Radius, Shadow } from '../theme';
 import { BottomTabBar, Icon, ToggleSwitch } from '../components';
 import { devicesData } from '../data';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 // ── FAB MENU ITEMS ──────────────────────────────────────────
 const FAB_MENU = [
@@ -43,150 +44,144 @@ export default function HomeScreen({ navigate }) {
   };
 
   return (
-    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
-      <StatusBar style="dark" />
+    <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#F5EDE3' }} edges={['top']}>
+        <StatusBar style="dark" />
 
-      {/* ── Gradient Background (simulated: #F5EDE3 -> #F2C4C4) ── */}
-      <View style={s.gradientBg}>
-        {Array.from({ length: 30 }).map((_, i) => {
-          const t = i / 29;
-          const r = Math.round(245 + (242 - 245) * t);
-          const g = Math.round(237 + (196 - 237) * t);
-          const b = Math.round(227 + (196 - 227) * t);
-          return (
-            <View
-              key={i}
-              style={[s.gradientStrip, { backgroundColor: `rgb(${r},${g},${b})` }]}
-            />
-          );
-        })}
-      </View>
+        {/* ── Gradient Background (simulated: #F5EDE3 -> #F2C4C4) ── */}
+        <View style={s.gradientBg}>
+          {Array.from({ length: 30 }).map((_, i) => {
+            const t = i / 29;
+            const r = Math.round(245 + (242 - 245) * t);
+            const g = Math.round(237 + (196 - 237) * t);
+            const b = Math.round(227 + (196 - 227) * t);
+            return (
+              <View
+                key={i}
+                style={[s.gradientStrip, { backgroundColor: `rgb(${r},${g},${b})` }]}
+              />
+            );
+          })}
+        </View>
 
-      {/* ── Header ── */}
-      <View style={s.header}>
-        <TouchableOpacity style={s.headerBtn}>
-          <Ionicons name="settings-outline" size={24} color="#1A1A1A" />
-        </TouchableOpacity>
-        <Text style={s.headerDash}>– –</Text>
-        <TouchableOpacity
-          style={{ padding: 4 }}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        {/* ── Header ── */}
+        <View style={s.header}>
+          <TouchableOpacity style={s.headerBtn}>
+            <Ionicons name="settings-outline" size={24} color="#1A1A1A" />
+          </TouchableOpacity>
+          <Text style={s.headerDash}>– –</Text>
+          <TouchableOpacity
+            style={{ padding: 4 }}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons name="bulb-outline" size={24} color="#1A1A1A" />
+          </TouchableOpacity>
+        </View>
+
+        {/* ── Content ── */}
+        <ScrollView
+          style={s.scroll}
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: 80, paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
         >
-          <Ionicons name="bulb-outline" size={24} color="#1A1A1A" />
-        </TouchableOpacity>
-      </View>
+          <Text style={s.homeTitle}>My Home</Text>
 
-      {/* ── Content ── */}
-      <ScrollView
-        style={s.scroll}
-        contentContainerStyle={s.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={s.homeTitle}>My Home</Text>
-
-        {devices.length === 0 ? (
-          <Text style={s.emptyText}>
-            Create the lifestyle you want by{'\n'}adding Create accessories.
-          </Text>
-        ) : (
-          <View style={s.deviceGrid}>
-            {devices.map(d => (
-              <View key={d.id} style={s.deviceCard}>
-                {/* Icon */}
-                <Icon name={d.icon} size={24} color={Colors.textDark} style={s.deviceIcon} />
-                <Text style={s.deviceName}>{d.name}</Text>
-                {d.value && <Text style={s.deviceValue}>{d.value}</Text>}
-                {d.status && (
-                  <Text style={[
-                    s.deviceStatus,
-                    d.isOn && { color: Colors.textGreen },
-                  ]}>
-                    {d.status}
-                  </Text>
-                )}
-                {d.hasToggle && (
-                  <View style={s.toggleWrap}>
-                    <ToggleSwitch
-                      isOn={d.isOn}
-                      onToggle={() => handleToggle(d.id)}
-                    />
-                  </View>
-                )}
-              </View>
-            ))}
-          </View>
-        )}
-
-        {/* Spacer for FAB */}
-        <View style={{ height: 100 }} />
-      </ScrollView>
-
-      {/* ── FAB Overlay ── */}
-      {fabOpen && (
-        <TouchableOpacity
-          style={s.fabOverlay}
-          activeOpacity={1}
-          onPress={() => setFabOpen(false)}
-        >
-          <View style={s.fabMenu}>
-            {FAB_MENU.map(item => (
-              <TouchableOpacity
-                key={item.key}
-                style={s.fabMenuItem}
-                onPress={() => handleFabAction(item.key)}
-                activeOpacity={0.85}
-              >
-                <Text style={s.fabMenuLabel}>{item.label}</Text>
-                <View style={s.fabMenuIconWrap}>
-                  {item.key === 'tap' && (
-                    <Ionicons name="hand-left-outline" size={24} color="#1A1A1A" />
+          {devices.length === 0 ? (
+            <Text style={s.emptyText}>
+              Create the lifestyle you want by{'\n'}adding Create accessories.
+            </Text>
+          ) : (
+            <View style={s.deviceGrid}>
+              {devices.map(d => (
+                <View key={d.id} style={s.deviceCard}>
+                  {/* Icon */}
+                  <Icon name={d.icon} size={24} color={Colors.textDark} style={s.deviceIcon} />
+                  <Text style={s.deviceName}>{d.name}</Text>
+                  {d.value && <Text style={s.deviceValue}>{d.value}</Text>}
+                  {d.status && (
+                    <Text style={[
+                      s.deviceStatus,
+                      d.isOn && { color: Colors.textGreen },
+                    ]}>
+                      {d.status}
+                    </Text>
                   )}
-                  {item.key === 'auto' && (
-                    <Ionicons name="bulb-outline" size={24} color="#1A1A1A" />
-                  )}
-                  {item.key === 'home' && (
-                    <Ionicons name="home-outline" size={24} color="#1A1A1A" />
-                  )}
-                  {item.key === 'device' && (
-                    <MaterialCommunityIcons name="home-wifi-outline" size={24} color="#1A1A1A" />
+                  {d.hasToggle && (
+                    <View style={s.toggleWrap}>
+                      <ToggleSwitch
+                        isOn={d.isOn}
+                        onToggle={() => handleToggle(d.id)}
+                      />
+                    </View>
                   )}
                 </View>
+              ))}
+            </View>
+          )}
+
+          {/* Spacer for FAB */}
+          <View style={{ height: 100 }} />
+        </ScrollView>
+
+        {/* ── FAB Overlay ── */}
+        {fabOpen && (
+          <TouchableOpacity
+            style={s.fabOverlay}
+            activeOpacity={1}
+            onPress={() => setFabOpen(false)}
+          >
+            <View style={s.fabMenu}>
+              {FAB_MENU.map(item => (
+                <TouchableOpacity
+                  key={item.key}
+                  style={s.fabMenuItem}
+                  onPress={() => handleFabAction(item.key)}
+                  activeOpacity={0.85}
+                >
+                  <Text style={s.fabMenuLabel}>{item.label}</Text>
+                  <View style={s.fabMenuIconWrap}>
+                    {item.key === 'tap' && (
+                      <Ionicons name="hand-left-outline" size={24} color="#1A1A1A" />
+                    )}
+                    {item.key === 'auto' && (
+                      <Ionicons name="bulb-outline" size={24} color="#1A1A1A" />
+                    )}
+                    {item.key === 'home' && (
+                      <Ionicons name="home-outline" size={24} color="#1A1A1A" />
+                    )}
+                    {item.key === 'device' && (
+                      <MaterialCommunityIcons name="home-wifi-outline" size={24} color="#1A1A1A" />
+                    )}
+                  </View>
+                </TouchableOpacity>
+              ))}
+              {/* Close X */}
+              <TouchableOpacity
+                style={s.fabClose}
+                onPress={() => setFabOpen(false)}
+                activeOpacity={0.85}
+              >
+                <Text style={s.fabCloseText}>×</Text>
               </TouchableOpacity>
-            ))}
-            {/* Close X */}
-            <TouchableOpacity
-              style={s.fabClose}
-              onPress={() => setFabOpen(false)}
-              activeOpacity={0.85}
-            >
-              <Text style={s.fabCloseText}>×</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      )}
+            </View>
+          </TouchableOpacity>
+        )}
 
-      {/* ── FAB Add Button ── */}
+        <BottomTabBar active="home" onPress={navigate} />
+      </SafeAreaView>
+
+      {/* FAB outside SafeAreaView so it floats above tab bar */}
       {!fabOpen && (
-        <TouchableOpacity
-          style={s.fab}
-          onPress={() => setFabOpen(true)}
-          activeOpacity={0.85}
-        >
-          <Text style={s.fabPlus}>+</Text>
-          <Text style={s.fabAdd}>Add</Text>
+        <TouchableOpacity style={s.fab} onPress={() => setFabOpen(true)}>
+          <Ionicons name="add" size={20} color="#1A1A1A" />
+          <Text style={s.fabText}>Add</Text>
         </TouchableOpacity>
       )}
-
-      <BottomTabBar active="home" onPress={navigate} />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: Colors.bgWarmGradientStart,
-  },
   gradientBg: {
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'column',
@@ -214,10 +209,6 @@ const s = StyleSheet.create({
     letterSpacing: 4,
   },
   scroll: { flex: 1 },
-  scrollContent: {
-    paddingHorizontal: Spacing.md,
-    paddingTop: Spacing.xs,
-  },
   homeTitle: {
     fontSize: 34,
     fontWeight: '600',
@@ -236,11 +227,11 @@ const s = StyleSheet.create({
   deviceGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.md,
-    marginTop: Spacing.md,
+    gap: 16,
+    marginTop: 16,
   },
   deviceCard: {
-    width: (SCREEN_W - Spacing.md * 2 - Spacing.md) / 2,
+    width: (W - 32 - 16) / 2,
     backgroundColor: Colors.bgWhite,
     borderRadius: Radius.xl,
     padding: Spacing.lg,
@@ -279,10 +270,12 @@ const s = StyleSheet.create({
     paddingBottom: 80,
     paddingRight: 20,
     alignItems: 'flex-end',
+    zIndex: 90,
   },
   fabMenu: {
     alignItems: 'flex-end',
     gap: 14,
+    paddingBottom: 20,
   },
   fabMenuItem: {
     flexDirection: 'row',
@@ -324,10 +317,10 @@ const s = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 24,
+    bottom: 90,
     right: 20,
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 28,
+    paddingHorizontal: 24,
     paddingVertical: 14,
     borderRadius: 999,
     flexDirection: 'row',
@@ -337,16 +330,11 @@ const s = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 8,
     zIndex: 100,
   },
-  fabPlus: {
-    fontSize: 22,
-    fontWeight: '300',
-    color: '#1A1A1A',
-  },
-  fabAdd: {
-    fontSize: 16,
+  fabText: {
+    fontSize: 15,
     fontWeight: '700',
     color: '#1A1A1A',
   },

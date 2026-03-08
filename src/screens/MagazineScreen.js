@@ -1,14 +1,15 @@
 // src/screens/MagazineScreen.js
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, ActivityIndicator,
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Colors, Typography, Spacing, Radius, Shadow } from '../theme';
 import { BottomTabBar } from '../components';
 import { articlesData } from '../data';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function MagazineScreen({ navigate }) {
   // Simulates loading state seen in video
@@ -83,7 +84,7 @@ const s = StyleSheet.create({
     color: Colors.textMid,
   },
   content: {
-    paddingBottom: 30,
+    paddingBottom: 80,
   },
   categoryLabel: {
     fontSize: Typography.xs,

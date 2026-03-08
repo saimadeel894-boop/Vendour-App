@@ -1,39 +1,38 @@
 import React from 'react';
 import {
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
-    StyleSheet,
+    View, Text, ScrollView, TouchableOpacity,
+    StyleSheet, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 
+const { width: W, height: H } = Dimensions.get('window');
+
 const menuItems = [
     {
         label: 'HEATING DEALS', badge: 'SALE',
-        badgeColor: '#E84E1B', hasArrow: false
+        badgeColor: '#E84E1B', hasPlus: false
     },
     {
         label: 'SKINCARE', badge: 'NEW',
-        badgeColor: '#666666', hasArrow: false
+        badgeColor: '#888888', hasPlus: false
     },
     {
         label: 'BABY', badge: 'NEW',
-        badgeColor: '#666666', hasArrow: false
+        badgeColor: '#888888', hasPlus: false
     },
-    { label: 'NEW IN', badge: null, hasArrow: false },
-    { label: 'FRIDGES', hasArrow: true },
-    { label: 'KITCHEN', hasArrow: true },
-    { label: 'CEILING FANS', hasArrow: true },
-    { label: 'HEATERS', hasArrow: true },
-    { label: 'PERSONAL CARE', hasArrow: true },
-    { label: 'AUDIO AND TV', hasArrow: true },
-    { label: 'TRAVEL SUITCASES', hasArrow: true },
-    { label: 'GARDEN AND OUTDOOR', hasArrow: true },
-    { label: 'HOME AND CLEANING', hasArrow: true },
-    { label: 'CLIMATE APPLIANCES', hasArrow: true },
+    { label: 'NEW IN', badge: null, hasPlus: false },
+    { label: 'FRIDGES', hasPlus: true },
+    { label: 'KITCHEN', hasPlus: true },
+    { label: 'CEILING FANS', hasPlus: true },
+    { label: 'HEATERS', hasPlus: true },
+    { label: 'PERSONAL CARE', hasPlus: true },
+    { label: 'AUDIO AND TV', hasPlus: true },
+    { label: 'TRAVEL SUITCASES', hasPlus: true },
+    { label: 'GARDEN AND OUTDOOR', hasPlus: true },
+    { label: 'HOME AND CLEANING', hasPlus: true },
+    { label: 'CLIMATE APPLIANCES', hasPlus: true },
 ];
 
 const footerLinks = [
@@ -61,11 +60,9 @@ export default function ShopMenuScreen({ navigate }) {
                 </TouchableOpacity>
             </View>
 
-            <View style={s.divider} />
-
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: 40 }}
+                contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}
             >
                 {/* Main category rows */}
                 {menuItems.map((item, index) => (
@@ -86,7 +83,7 @@ export default function ShopMenuScreen({ navigate }) {
                                 </View>
                             )}
                         </View>
-                        {item.hasArrow && (
+                        {item.hasPlus && (
                             <Text style={s.plus}>+</Text>
                         )}
                     </TouchableOpacity>
@@ -95,7 +92,7 @@ export default function ShopMenuScreen({ navigate }) {
                 {/* Spacer between categories and footer */}
                 <View style={s.footerSpacer} />
 
-                {/* Footer links — smaller text, no arrows */}
+                {/* Footer links */}
                 {footerLinks.map((link, index) => (
                     <TouchableOpacity
                         key={index}
@@ -106,7 +103,6 @@ export default function ShopMenuScreen({ navigate }) {
                     </TouchableOpacity>
                 ))}
 
-                <View style={{ height: 32 }} />
             </ScrollView>
         </SafeAreaView>
     );
@@ -117,39 +113,36 @@ const s = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
     },
-
-    // Header
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
-        paddingVertical: 16,
+        paddingHorizontal: 16,
+        paddingVertical: 14,
+        borderBottomWidth: 1,
+        borderBottomColor: '#E0D8D0',
         position: 'relative',
     },
     brand: {
+        position: 'absolute',
+        left: 0, right: 0,
+        textAlign: 'center',
         fontSize: 20,
         fontWeight: '900',
         letterSpacing: 6,
         color: '#1A1A1A',
-        textAlign: 'center',
+        zIndex: -1,
     },
     closeBtn: {
         position: 'absolute',
-        right: 20,
+        right: 16,
         padding: 4,
     },
-    divider: {
-        height: 1,
-        backgroundColor: '#E0D8D0',
-    },
-
-    // Category rows
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 18,
+        paddingVertical: 20,
         paddingHorizontal: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#E8E0D6',
@@ -162,7 +155,7 @@ const s = StyleSheet.create({
     rowLabel: {
         fontSize: 14,
         fontWeight: '700',
-        letterSpacing: 0.8,
+        letterSpacing: 1.5,
         color: '#1A1A1A',
     },
     badge: {
@@ -178,25 +171,23 @@ const s = StyleSheet.create({
     },
     plus: {
         fontSize: 22,
-        color: '#AAAAAA',
+        color: '#BBBBBB',
         fontWeight: '300',
     },
-
-    // Footer section
     footerSpacer: {
-        height: 32,
-        backgroundColor: '#FFFFFF',
+        height: 24,
+        backgroundColor: '#F8F5F0',
     },
     footerRow: {
         paddingVertical: 14,
         paddingHorizontal: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#F0EBE5',
+        borderLeftWidth: 0,
     },
     footerLabel: {
         fontSize: 13,
         fontWeight: '500',
-        color: '#555555',
-        letterSpacing: 0.3,
+        color: '#666666',
     },
 });

@@ -1,10 +1,12 @@
 import React from 'react';
 import {
-    View, Text, TouchableOpacity, StyleSheet
+  View, Text, TouchableOpacity, StyleSheet, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function OrderHistoryScreen({ navigate }) {
     return (

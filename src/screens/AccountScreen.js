@@ -1,8 +1,7 @@
-// src/screens/AccountScreen.js
 import React from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, Alert,
+  ScrollView, Alert, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -11,12 +10,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BottomTabBar, MenuRow } from '../components';
 import { userData } from '../data';
 
+const { width: W, height: H } = Dimensions.get('window');
+
 export default function AccountScreen({ navigate }) {
   return (
     <SafeAreaView style={s.root} edges={['top', 'bottom']}>
       <StatusBar style="dark" />
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.content}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}>
 
         {/* Profile Header */}
         <View style={s.profileSection}>
@@ -42,16 +43,16 @@ export default function AccountScreen({ navigate }) {
             label="Account and security"
             onPress={() => Alert.alert('Coming soon')}
           />
-        </View>
-
-        {/* WALLET */}
-        <Text style={s.sectionLabel}>WALLET</Text>
-        <View style={s.menuGroup}>
           <MenuRow
             iconComponent={<Ionicons name="location-outline" size={20} color="#1A1A1A" />}
             label="My addresses"
             onPress={() => navigate('myAddresses')}
           />
+        </View>
+
+        {/* MY ORDERS */}
+        <Text style={s.sectionLabel}>MY ORDERS</Text>
+        <View style={s.menuGroup}>
           <MenuRow
             iconComponent={<Ionicons name="time-outline" size={20} color="#1A1A1A" />}
             label="Order History"
@@ -67,6 +68,11 @@ export default function AccountScreen({ navigate }) {
             label="Guarantee registry"
             onPress={() => Alert.alert('Coming soon')}
           />
+        </View>
+
+        {/* WALLET */}
+        <Text style={s.sectionLabel}>WALLET</Text>
+        <View style={s.menuGroup}>
           <MenuRow
             iconComponent={<MaterialCommunityIcons name="ticket-percent-outline" size={20} color="#1A1A1A" />}
             label="Discount vouchers"
@@ -113,7 +119,6 @@ export default function AccountScreen({ navigate }) {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#F8F5F0' },
-  content: { paddingBottom: 40 },
   profileSection: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -152,8 +157,8 @@ const s = StyleSheet.create({
     marginHorizontal: 16,
     marginTop: 24,
     marginBottom: 32,
-    paddingVertical: 16,
-    borderRadius: 50,
+    paddingVertical: 14,
+    borderRadius: 999,
     borderWidth: 1.5,
     borderColor: '#CC0000',
     backgroundColor: 'transparent',
@@ -161,7 +166,7 @@ const s = StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#CC0000',
   },
 });

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-    View, Text, TextInput, TouchableOpacity,
-    ScrollView, StyleSheet
+  View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function MyInformationScreen({ navigate }) {
     const [form, setForm] = useState({
@@ -27,7 +28,7 @@ export default function MyInformationScreen({ navigate }) {
                 <View style={{ width: 24 }} />
             </View>
             <ScrollView
-                contentContainerStyle={{ paddingBottom: 100 }}
+                contentContainerStyle={{ paddingBottom: 80 , flexGrow: 1}}
                 showsVerticalScrollIndicator={false}
             >
                 {[

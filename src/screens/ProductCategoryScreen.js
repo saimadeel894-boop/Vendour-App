@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
-const W = Dimensions.get('window').width;
+const { width: W, height: H } = Dimensions.get('window');
 
 const dummyProducts = [
     {
@@ -79,7 +79,6 @@ function ProductCard({ item, navigate }) {
             style={s.card}
             onPress={() => navigate('productDetail')}
         >
-            {/* Image area */}
             <View style={[s.imageArea, { backgroundColor: item.bgColor }]}>
                 {item.badge && (
                     <View style={s.ukBadge}>
@@ -98,7 +97,6 @@ function ProductCard({ item, navigate }) {
                 </TouchableOpacity>
             </View>
 
-            {/* Info area */}
             <View style={s.info}>
                 <Text style={s.productName} numberOfLines={2}>
                     {item.name}
@@ -136,14 +134,30 @@ export default function ProductCategoryScreen({ navigate }) {
 
             {/* Header */}
             <View style={s.header}>
-                <TouchableOpacity onPress={() => navigate('shopMenu')}>
+                {/* Left - fixed 44px */}
+                <TouchableOpacity
+                    style={{ width: 44, alignItems: 'flex-start', justifyContent: 'center' }}
+                    onPress={() => navigate('shopMenu')}
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
                     <Ionicons name="menu" size={26} color="#1A1A1A" />
                 </TouchableOpacity>
+
+                {/* Center - VENDOM absolutely centered */}
                 <Text style={s.brand}>VENDOM</Text>
-                <View style={s.headerIcons}>
-                    <Ionicons name="search-outline" size={22} color="#1A1A1A" />
-                    <Ionicons name="heart-outline" size={22} color="#1A1A1A" />
-                    <View style={s.cartWrap}>
+
+                {/* Right - fixed 44px */}
+                <View style={{
+                    width: 44, flexDirection: 'row',
+                    alignItems: 'center', justifyContent: 'flex-end', gap: 14
+                }}>
+                    <TouchableOpacity>
+                        <Ionicons name="search-outline" size={22} color="#1A1A1A" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Ionicons name="heart-outline" size={22} color="#1A1A1A" />
+                    </TouchableOpacity>
+                    <View>
                         <Ionicons name="bag-outline" size={22} color="#1A1A1A" />
                         <View style={s.cartBadge}>
                             <Text style={s.cartBadgeText}>2</Text>
@@ -196,7 +210,7 @@ export default function ProductCategoryScreen({ navigate }) {
             </View>
 
             {/* Product grid */}
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}>
                 <View style={s.grid}>
                     {dummyProducts.map((item) => (
                         <ProductCard key={item.id} item={item} navigate={navigate} />
@@ -206,8 +220,6 @@ export default function ProductCategoryScreen({ navigate }) {
         </SafeAreaView>
     );
 }
-
-const CARD_W = W / 2;
 
 const s = StyleSheet.create({
     root: { flex: 1, backgroundColor: '#FFFFFF' },
@@ -228,22 +240,19 @@ const s = StyleSheet.create({
         paddingVertical: 14,
         borderBottomWidth: 1,
         borderBottomColor: '#E0D8D0',
+        position: 'relative',
     },
     brand: {
         position: 'absolute',
-        left: 0, right: 0,
+        left: 0,
+        right: 0,
         textAlign: 'center',
         fontSize: 22,
         fontWeight: '900',
         letterSpacing: 6,
         color: '#1A1A1A',
+        zIndex: -1,
     },
-    headerIcons: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 16,
-    },
-    cartWrap: { position: 'relative' },
     cartBadge: {
         position: 'absolute',
         top: -6, right: -6,
@@ -286,13 +295,13 @@ const s = StyleSheet.create({
         flexWrap: 'wrap',
     },
     card: {
-        width: CARD_W,
+        width: W / 2,
         borderRightWidth: 1,
         borderBottomWidth: 1,
         borderColor: '#E8E0D6',
     },
     imageArea: {
-        width: CARD_W,
+        width: W / 2,
         height: 200,
         position: 'relative',
     },

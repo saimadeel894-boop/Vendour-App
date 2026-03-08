@@ -1,14 +1,15 @@
 // src/screens/RecipesScreen.js
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  ScrollView,
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Colors, Typography, Spacing } from '../theme';
 import { BottomTabBar, Icon } from '../components';
 import { recipesData } from '../data';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function RecipesScreen({ navigate }) {
   const [recipes, setRecipes] = useState(recipesData);
@@ -114,7 +115,7 @@ const s = StyleSheet.create({
     justifyContent: 'center',
   },
   content: {
-    paddingBottom: 30,
+    paddingBottom: 80,
   },
   recipeCard: {
     backgroundColor: Colors.bgWhite,

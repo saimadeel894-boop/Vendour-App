@@ -1,12 +1,13 @@
 // src/screens/CreateSceneScreen.js — SECTION 8 pixel-perfect
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  ScrollView,
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function CreateSceneScreen({ navigate }) {
   return (

@@ -1,11 +1,13 @@
 // src/screens/LoginScreen.js
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, Platform,
+  View, Text, StyleSheet, TouchableOpacity, Platform, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Colors, Typography, Spacing, Radius, SCREEN_H } from '../theme';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function LoginScreen({ navigate }) {
   return (

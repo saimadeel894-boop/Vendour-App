@@ -1,14 +1,15 @@
 // src/screens/ShowAreaScreen.js
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  SafeAreaView, StatusBar,
+  View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, Dimensions
 } from 'react-native';
 import { Colors, Typography, Spacing } from '../theme';
 
+const { width: W, height: H } = Dimensions.get('window');
+
 export default function ShowAreaScreen({ navigate }) {
   return (
-    <SafeAreaView style={s.root}>
+    <SafeAreaView style={s.root} edges={['top', 'bottom']}>
       <StatusBar barStyle="dark-content" />
 
       {/* Header */}

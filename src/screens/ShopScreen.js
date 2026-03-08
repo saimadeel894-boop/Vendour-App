@@ -1,374 +1,55 @@
-// src/screens/ShopScreen.js
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity,
-  ScrollView, Modal,
+  ScrollView, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Colors, Typography, Spacing, Radius, Shadow, SCREEN_W } from '../theme';
-import { BottomTabBar, DiscountBanner, Icon } from '../components';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Colors, Typography, Spacing, Radius } from '../theme';
+import { BottomTabBar, DiscountBanner } from '../components';
 import { productsData, appConfig } from '../data';
 
-const HAMBURGER_ITEMS = [
-  { label: 'HEATING DEALS', badge: 'SALE', badgeColor: '#E84E1B' },
-  { label: 'SKINCARE', badge: 'NEW', badgeColor: '#E0E0E0' },
-  { label: 'BABY', badge: 'NEW', badgeColor: '#E0E0E0' },
-  { label: 'NEW IN' },
-  { label: 'FRIDGES', expand: true },
-  { label: 'KITCHEN', expand: true },
-  { label: 'CEILING FANS', expand: true },
-  { label: 'HEATERS', expand: true },
-  { label: 'PERSONAL CARE', expand: true },
-  { label: 'AUDIO AND TV', expand: true },
-  { label: 'TRAVEL SUITCASES', expand: true },
-  { label: 'GARDEN AND OUTDOOR', expand: true },
-];
-
-// ── PRODUCT DETAIL SCREEN ────────────────────────────────────
-function ProductDetail({ product, onBack }) {
-  const [selectedColor, setSelectedColor] = useState(product.defaultColorIndex);
-
-  return (
-    <SafeAreaView style={pd.root}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Back */}
-        <TouchableOpacity style={pd.backRow} onPress={onBack}>
-          <Ionicons name="arrow-back" size={18} color="#888888" />
-          <Text style={pd.backText}>Back</Text>
-        </TouchableOpacity>
-
-        {/* Product Image Area */}
-        <View style={[pd.imgArea, {
-          backgroundColor: product.colors[selectedColor].hex + '55',
-        }]}>
-          {/* Illustrated coffee machine */}
-          <View style={pd.machineWrap}>
-            <View style={[pd.machineBody, {
-              backgroundColor: product.colors[selectedColor].hex,
-            }]}>
-              <View style={pd.machineTop} />
-              <View style={pd.machineBtn} />
-              <Text style={pd.machineBrand}>CREATE</Text>
-            </View>
-            <View style={pd.machineArm}>
-              <View style={pd.cup} />
-            </View>
-            <View style={pd.machineBase} />
-          </View>
-          {/* Dot nav */}
-          <View style={pd.dotRow}>
-            {[0, 1, 2].map(i => (
-              <View key={i} style={[pd.dot, i === 0 && pd.dotActive]} />
-            ))}
-          </View>
-          {/* Bookmark */}
-          <TouchableOpacity style={pd.bookmarkBtn}>
-            <Ionicons name="bookmark-outline" size={18} color={Colors.textDark} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Product Info */}
-        <View style={pd.info}>
-          <Text style={pd.title}>{product.name} -{'\n'}{product.subtitle}</Text>
-          <Text style={pd.stock}>✓  In Stock, shipping in {product.shippingTime}</Text>
-
-          {/* Color */}
-          <View style={pd.colorRow}>
-            <Text style={pd.colorBold}>Color: </Text>
-            <Text style={pd.colorLight}>{product.colors[selectedColor].label}</Text>
-          </View>
-          <View style={pd.swatchRow}>
-            {product.colors.map((c, i) => (
-              <TouchableOpacity
-                key={i}
-                onPress={() => setSelectedColor(i)}
-                style={[
-                  pd.swatch,
-                  { backgroundColor: c.hex },
-                  i === selectedColor && pd.swatchActive,
-                ]}
-              />
-            ))}
-          </View>
-
-          {/* Discount banner */}
-          <View style={pd.discountBar}>
-            <Text style={pd.discountText}>SAVE {product.discount}%</Text>
-          </View>
-
-          {/* Price + CTA */}
-          <View style={pd.priceCta}>
-            <View>
-              <Text style={pd.priceMain}>
-                {product.price.toFixed(2).replace('.', ',')} €
-              </Text>
-              <Text style={pd.priceOld}>
-                Recommended price {product.originalPrice.toFixed(2)} €
-              </Text>
-            </View>
-            <TouchableOpacity style={pd.cartBtn} activeOpacity={0.85}>
-              <Text style={pd.cartText}>Add to cart</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Exclusive Offers banner */}
-        <View style={pd.offerBanner}>
-          <Text style={pd.offerTag}>EXCLUSIVE OFFERS</Text>
-          <Text style={pd.offerText}>
-            Buy Create products from the App and access exclusive offers.
-          </Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const pd = StyleSheet.create({
-  root: { flex: 1, backgroundColor: Colors.bgWhite },
-  backRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: Spacing.md,
-    paddingTop: 14,
-    paddingBottom: 4,
-  },
-  backArrow: { fontSize: 18, color: Colors.textDark },
-  backText: { fontSize: Typography.md, color: Colors.textDark, fontWeight: Typography.medium },
-  imgArea: {
-    height: 290,
-    marginHorizontal: Spacing.md,
-    borderRadius: Radius.xl,
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  machineWrap: { alignItems: 'center' },
-  machineBody: {
-    width: 90,
-    height: 130,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.08)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    ...Shadow.sm,
-  },
-  machineTop: {
-    width: 38,
-    height: 22,
-    backgroundColor: 'rgba(0,0,0,0.12)',
-    borderRadius: 5,
-  },
-  machineBtn: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    backgroundColor: '#2C2825',
-  },
-  machineBrand: {
-    position: 'absolute',
-    top: 10,
-    fontSize: 7,
-    letterSpacing: 3,
-    color: 'rgba(0,0,0,0.4)',
-    fontWeight: Typography.bold,
-  },
-  machineArm: {
-    width: 64,
-    height: 30,
-    backgroundColor: 'rgba(200,190,178,0.9)',
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: 2,
-    marginTop: -4,
-  },
-  cup: {
-    width: 28,
-    height: 24,
-    backgroundColor: Colors.bgWhite,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
-  },
-  machineBase: {
-    width: 112,
-    height: 10,
-    backgroundColor: 'rgba(200,190,178,0.8)',
-    borderRadius: 5,
-    marginTop: -2,
-  },
-  dotRow: {
-    position: 'absolute',
-    bottom: 14,
-    flexDirection: 'row',
-    gap: 6,
-  },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-  dotActive: {
-    width: 18,
-    backgroundColor: Colors.textDark,
-  },
-  bookmarkBtn: {
-    position: 'absolute',
-    top: 12,
-    right: 14,
-    width: 36,
-    height: 36,
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    borderRadius: Radius.sm,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  info: { paddingHorizontal: Spacing.lg, paddingTop: Spacing.lg },
-  title: {
-    fontSize: Typography.xl,
-    fontWeight: Typography.bold,
-    color: Colors.textDark,
-    textAlign: 'center',
-    lineHeight: 26,
-    marginBottom: 10,
-  },
-  stock: {
-    fontSize: Typography.sm,
-    color: Colors.green,
-    textAlign: 'center',
-    fontWeight: Typography.semiBold,
-    marginBottom: Spacing.md,
-  },
-  colorRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: Spacing.xs,
-  },
-  colorBold: { fontSize: Typography.base, fontWeight: Typography.bold, color: Colors.textDark },
-  colorLight: { fontSize: Typography.base, color: Colors.textMid },
-  swatchRow: {
-    flexDirection: 'row',
-    gap: 10,
-    marginBottom: Spacing.lg,
-  },
-  swatch: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 1.5,
-    borderColor: 'rgba(0,0,0,0.1)',
-  },
-  swatchActive: {
-    borderWidth: 2.5,
-    borderColor: Colors.textDark,
-    ...Shadow.sm,
-  },
-  discountBar: {
-    backgroundColor: Colors.orange,
-    paddingVertical: 11,
-    alignItems: 'center',
-    borderRadius: 6,
-    marginBottom: Spacing.md,
-  },
-  discountText: {
-    color: Colors.textWhite,
-    fontSize: Typography.base,
-    fontWeight: Typography.extraBold,
-    letterSpacing: 1.5,
-  },
-  priceCta: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: Spacing.xs,
-  },
-  priceMain: {
-    fontSize: 28,
-    fontWeight: Typography.extraBold,
-    color: Colors.textDark,
-    letterSpacing: -0.5,
-  },
-  priceOld: {
-    fontSize: Typography.xs,
-    color: Colors.textLight,
-    textDecorationLine: 'line-through',
-    marginTop: 3,
-  },
-  cartBtn: {
-    backgroundColor: Colors.textDark,
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: 16,
-    borderRadius: Radius.sm,
-  },
-  cartText: { color: Colors.textWhite, fontSize: Typography.md, fontWeight: Typography.bold },
-  offerBanner: {
-    backgroundColor: Colors.bgWhite,
-    margin: Spacing.md,
-    marginTop: Spacing.lg,
-    borderRadius: Radius.xl,
-    padding: Spacing.xl,
-    borderWidth: 1,
-    borderColor: Colors.border,
-  },
-  offerTag: {
-    fontSize: Typography.xs,
-    fontWeight: Typography.extraBold,
-    letterSpacing: 3,
-    color: Colors.textDark,
-    marginBottom: Spacing.xs,
-  },
-  offerText: {
-    fontSize: Typography.xxl,
-    fontWeight: Typography.medium,
-    color: Colors.textDark,
-    lineHeight: 30,
-  },
-});
+const { width: W, height: H } = Dimensions.get('window');
 
 // ── SHOP HOME SCREEN ─────────────────────────────────────────
 export default function ShopScreen({ navigate }) {
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  if (selectedProduct) {
-    return (
-      <ProductDetail
-        product={selectedProduct}
-        onBack={() => setSelectedProduct(null)}
-      />
-    );
-  }
-
   return (
     <SafeAreaView style={s.root} edges={['top', 'bottom']}>
       <StatusBar style="dark" />
       <DiscountBanner voucher={appConfig.discountVoucher} percent={appConfig.discountPercent} />
 
       {/* Shop Header */}
-      <View style={s.shopHeader}>
-        <TouchableOpacity onPress={() => setMenuOpen(true)}>
+      <View style={s.header}>
+        {/* Left - fixed 44px */}
+        <TouchableOpacity
+          style={{ width: 44, alignItems: 'flex-start', justifyContent: 'center' }}
+          onPress={() => navigate('shopMenu')}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
           <Ionicons name="menu" size={26} color="#1A1A1A" />
         </TouchableOpacity>
-        <Text style={s.shopBrand}>VENDOM</Text>
-        <View style={s.shopHeaderRight}>
-          <TouchableOpacity style={s.headerIconBtn}>
-            <Ionicons name="search-outline" size={24} color="#1A1A1A" />
+
+        {/* Center - VENDOM absolutely centered */}
+        <Text style={s.brand}>VENDOM</Text>
+
+        {/* Right - fixed 44px */}
+        <View style={{
+          width: 44, flexDirection: 'row',
+          alignItems: 'center', justifyContent: 'flex-end', gap: 14
+        }}>
+          <TouchableOpacity>
+            <Ionicons name="search-outline" size={22} color="#1A1A1A" />
           </TouchableOpacity>
-          <TouchableOpacity style={s.headerIconBtn}>
-            <Ionicons name="heart-outline" size={24} color="#1A1A1A" />
+          <TouchableOpacity>
+            <Ionicons name="heart-outline" size={22} color="#1A1A1A" />
           </TouchableOpacity>
-          <TouchableOpacity style={s.headerIconBtn}>
-            <Ionicons name="bag-outline" size={24} color="#1A1A1A" />
-            <View style={s.cartBadge}><Text style={s.cartBadgeText}>2</Text></View>
-          </TouchableOpacity>
+          <View>
+            <Ionicons name="bag-outline" size={22} color="#1A1A1A" />
+            <View style={s.cartBadge}>
+              <Text style={s.cartBadgeText}>2</Text>
+            </View>
+          </View>
         </View>
       </View>
 
@@ -394,7 +75,7 @@ export default function ShopScreen({ navigate }) {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}>
         {/* Hero Banner */}
         <View style={s.heroBanner}>
           <View style={s.heroContent}>
@@ -434,7 +115,7 @@ export default function ShopScreen({ navigate }) {
             <TouchableOpacity
               key={product.id}
               style={s.productCard}
-              onPress={() => setSelectedProduct(product)}
+              onPress={() => navigate('productDetail')}
               activeOpacity={0.85}
             >
               <View style={[s.productImg, { backgroundColor: '#F5F0E8' }]}>
@@ -463,35 +144,6 @@ export default function ShopScreen({ navigate }) {
         </View>
       </ScrollView>
 
-      {/* Hamburger Menu Modal */}
-      <Modal visible={menuOpen} animationType="slide" transparent>
-        <View style={s.menuOverlay}>
-          <View style={s.menuContent}>
-            <View style={s.menuHeader}>
-              <Text style={s.menuTitle}>VENDOM</Text>
-              <TouchableOpacity onPress={() => setMenuOpen(false)}>
-                <Ionicons name="close" size={24} color="#1A1A1A" />
-              </TouchableOpacity>
-            </View>
-            {HAMBURGER_ITEMS.map((item, i) => (
-              <TouchableOpacity key={i} style={s.menuRow}>
-                <View style={s.menuRowLeft}>
-                  <Text style={s.menuRowText}>{item.label}</Text>
-                  {item.badge && (
-                    <View style={[s.menuBadge, { backgroundColor: item.badgeColor }]}>
-                      <Text style={[s.menuBadgeText, item.badgeColor === '#E0E0E0' && s.menuBadgeTextGray]}>{item.badge}</Text>
-                    </View>
-                  )}
-                </View>
-                {item.expand && (
-                  <Text style={s.menuPlus}>+</Text>
-                )}
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-      </Modal>
-
       <BottomTabBar active="shop" onPress={navigate} />
     </SafeAreaView>
   );
@@ -499,7 +151,7 @@ export default function ShopScreen({ navigate }) {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: Colors.bgWhite },
-  shopHeader: {
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -507,32 +159,23 @@ const s = StyleSheet.create({
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: '#E0D8D0',
+    position: 'relative',
   },
-  shopBrand: {
+  brand: {
     position: 'absolute',
     left: 0,
     right: 0,
+    textAlign: 'center',
     fontSize: 22,
     fontWeight: '900',
-    color: '#1A1A1A',
     letterSpacing: 6,
-    textAlign: 'center',
-  },
-  shopHeaderRight: {
-    flexDirection: 'row',
-    gap: 16,
-    alignItems: 'center',
-  },
-  headerIconBtn: {
-    width: 36,
-    height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
+    color: '#1A1A1A',
+    zIndex: -1,
   },
   cartBadge: {
     position: 'absolute',
-    top: 4,
-    right: 4,
+    top: -6,
+    right: -6,
     width: 14,
     height: 14,
     borderRadius: 7,
@@ -624,7 +267,7 @@ const s = StyleSheet.create({
     marginTop: Spacing.md,
   },
   productCard: {
-    width: SCREEN_W / 2,
+    width: W / 2,
     backgroundColor: Colors.bgWhite,
     borderRightWidth: 1,
     borderRightColor: Colors.border,
@@ -648,7 +291,6 @@ const s = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '800',
   },
-  productEmoji: { fontSize: 48 },
   productInfo: { padding: 10 },
   productName: {
     fontSize: Typography.sm,
@@ -724,56 +366,4 @@ const s = StyleSheet.create({
   },
   productsCount: { fontSize: 18, fontWeight: '700', color: '#1A1A1A' },
   viewToggle: { flexDirection: 'row', gap: 16 },
-  menuOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    justifyContent: 'flex-start',
-  },
-  menuContent: {
-    backgroundColor: '#FFFFFF',
-    marginTop: 0,
-  },
-  menuHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0D8D0',
-  },
-  menuTitle: {
-    fontSize: 20,
-    fontWeight: '900',
-    letterSpacing: 6,
-    color: '#1A1A1A',
-  },
-  menuRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E8E0D6',
-  },
-  menuRowLeft: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  menuRowText: {
-    fontSize: 14,
-    fontWeight: '700',
-    letterSpacing: 1,
-    color: '#1A1A1A',
-  },
-  menuBadge: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 4,
-  },
-  menuBadgeText: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: '#FFFFFF',
-  },
-  menuBadgeTextGray: { color: '#555555' },
-  menuPlus: { fontSize: 20, color: '#AAAAAA' },
 });

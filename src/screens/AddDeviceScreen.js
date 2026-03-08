@@ -1,8 +1,7 @@
 // src/screens/AddDeviceScreen.js
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  ScrollView,
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -10,6 +9,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SCREEN_W } from '../theme';
 import { deviceTypesData } from '../data';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 const ICON_MAP = {
   fan: 'ceiling-fan',
@@ -109,7 +110,7 @@ const s = StyleSheet.create({
   },
   wifiText: { fontSize: 14, color: '#888888' },
   wifiSelect: { fontSize: 14, fontWeight: '800', color: '#1A1A1A' },
-  content: { padding: 20, paddingBottom: 40 },
+  content: { padding: 20, paddingBottom: 80 },
   selectTitle: {
     fontSize: 26,
     fontWeight: '800',

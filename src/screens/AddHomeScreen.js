@@ -1,13 +1,14 @@
 // src/screens/AddHomeScreen.js
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  TextInput, Platform,
+  View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { Typography } from '../theme';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function AddHomeScreen({ navigate }) {
   const [houseName, setHouseName] = useState('');

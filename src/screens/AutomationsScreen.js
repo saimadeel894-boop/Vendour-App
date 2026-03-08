@@ -1,11 +1,13 @@
 // src/screens/AutomationsScreen.js
 import React from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
+  View, Text, StyleSheet, TouchableOpacity, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function AutomationsScreen({ navigate }) {
   return (

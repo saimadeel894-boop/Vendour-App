@@ -39,6 +39,7 @@ import AddDeviceScreen from './src/screens/AddDeviceScreen';
 import ShowAreaScreen from './src/screens/ShowAreaScreen';
 import ShopMenuScreen from './src/screens/ShopMenuScreen';
 import ProductCategoryScreen from './src/screens/ProductCategoryScreen';
+import ProductDetailScreen from './src/screens/ProductDetailScreen';
 import MyInformationScreen from './src/screens/account/MyInformationScreen';
 import OrderHistoryScreen from './src/screens/account/OrderHistoryScreen';
 import MyAddressesScreen from './src/screens/account/MyAddressesScreen';
@@ -66,7 +67,7 @@ export default function App() {
       case 'showarea': return <ShowAreaScreen navigate={navigate} />;
       case 'shopMenu': return <ShopMenuScreen navigate={navigate} />;
       case 'productCategory': return <ProductCategoryScreen navigate={navigate} />;
-      case 'productDetail': return <ShopScreen navigate={navigate} />;
+      case 'productDetail': return <ProductDetailScreen navigate={navigate} />;
       case 'myInformation': return <MyInformationScreen navigate={navigate} />;
       case 'orderHistory': return <OrderHistoryScreen navigate={navigate} />;
       case 'myAddresses': return <MyAddressesScreen navigate={navigate} />;

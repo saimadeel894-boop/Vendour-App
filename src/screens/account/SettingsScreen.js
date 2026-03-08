@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import {
-    View, Text, TouchableOpacity,
-    ScrollView, Switch, StyleSheet, Alert
+  View, Text, TouchableOpacity, ScrollView, Switch, StyleSheet, Alert, Dimensions
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
+
+const { width: W, height: H } = Dimensions.get('window');
 
 export default function SettingsScreen({ navigate }) {
     const [toggles, setToggles] = useState({
@@ -27,7 +28,7 @@ export default function SettingsScreen({ navigate }) {
                 <Text style={s.title}>Settings</Text>
                 <View style={{ width: 24 }} />
             </View>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }} showsVerticalScrollIndicator={false}>
 
                 {/* NOTIFICATIONS */}
                 <Text style={s.sectionLabel}>NOTIFICATIONS</Text>
