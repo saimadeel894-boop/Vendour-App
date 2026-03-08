@@ -44,6 +44,20 @@ import MyInformationScreen from './src/screens/account/MyInformationScreen';
 import OrderHistoryScreen from './src/screens/account/OrderHistoryScreen';
 import MyAddressesScreen from './src/screens/account/MyAddressesScreen';
 import SettingsScreen from './src/screens/account/SettingsScreen';
+import HeatersScreen from './src/screens/shop/HeatersScreen';
+import KitchenScreen from './src/screens/shop/KitchenScreen';
+import CeilingFansScreen from './src/screens/shop/CeilingFansScreen';
+import FridgesScreen from './src/screens/shop/FridgesScreen';
+import PersonalCareScreen from './src/screens/shop/PersonalCareScreen';
+import AudioTVScreen from './src/screens/shop/AudioTVScreen';
+import TravelSuitcasesScreen from './src/screens/shop/TravelSuitcasesScreen';
+import GardenOutdoorScreen from './src/screens/shop/GardenOutdoorScreen';
+import HomeCleaningScreen from './src/screens/shop/HomeCleaningScreen';
+import ClimateAppliancesScreen from './src/screens/shop/ClimateAppliancesScreen';
+import HeatingDealsScreen from './src/screens/shop/HeatingDealsScreen';
+import SkincareScreen from './src/screens/shop/SkincareScreen';
+import BabyScreen from './src/screens/shop/BabyScreen';
+import NewInScreen from './src/screens/shop/NewInScreen';
 
 export default function App() {
   const [screen, setScreen] = useState('login');
@@ -72,6 +86,20 @@ export default function App() {
       case 'orderHistory': return <OrderHistoryScreen navigate={navigate} />;
       case 'myAddresses': return <MyAddressesScreen navigate={navigate} />;
       case 'settings': return <SettingsScreen navigate={navigate} />;
+      case 'heaters': return <HeatersScreen navigate={navigate} />;
+      case 'kitchen': return <KitchenScreen navigate={navigate} />;
+      case 'ceilingFans': return <CeilingFansScreen navigate={navigate} />;
+      case 'fridges': return <FridgesScreen navigate={navigate} />;
+      case 'personalCare': return <PersonalCareScreen navigate={navigate} />;
+      case 'audioTV': return <AudioTVScreen navigate={navigate} />;
+      case 'travelSuitcases': return <TravelSuitcasesScreen navigate={navigate} />;
+      case 'gardenOutdoor': return <GardenOutdoorScreen navigate={navigate} />;
+      case 'homeCleaning': return <HomeCleaningScreen navigate={navigate} />;
+      case 'climateAppliances': return <ClimateAppliancesScreen navigate={navigate} />;
+      case 'heatingDeals': return <HeatingDealsScreen navigate={navigate} />;
+      case 'skincare': return <SkincareScreen navigate={navigate} />;
+      case 'baby': return <BabyScreen navigate={navigate} />;
+      case 'newIn': return <NewInScreen navigate={navigate} />;
       default: return <HomeScreen navigate={navigate} />;
     }
   };

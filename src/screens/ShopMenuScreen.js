@@ -10,29 +10,20 @@ import { Ionicons } from '@expo/vector-icons';
 const { width: W, height: H } = Dimensions.get('window');
 
 const menuItems = [
-    {
-        label: 'HEATING DEALS', badge: 'SALE',
-        badgeColor: '#E84E1B', hasPlus: false
-    },
-    {
-        label: 'SKINCARE', badge: 'NEW',
-        badgeColor: '#888888', hasPlus: false
-    },
-    {
-        label: 'BABY', badge: 'NEW',
-        badgeColor: '#888888', hasPlus: false
-    },
-    { label: 'NEW IN', badge: null, hasPlus: false },
-    { label: 'FRIDGES', hasPlus: true },
-    { label: 'KITCHEN', hasPlus: true },
-    { label: 'CEILING FANS', hasPlus: true },
-    { label: 'HEATERS', hasPlus: true },
-    { label: 'PERSONAL CARE', hasPlus: true },
-    { label: 'AUDIO AND TV', hasPlus: true },
-    { label: 'TRAVEL SUITCASES', hasPlus: true },
-    { label: 'GARDEN AND OUTDOOR', hasPlus: true },
-    { label: 'HOME AND CLEANING', hasPlus: true },
-    { label: 'CLIMATE APPLIANCES', hasPlus: true },
+    { label: 'HEATING DEALS', badge: 'SALE', badgeColor: '#E84E1B', hasPlus: false, route: 'heatingDeals' },
+    { label: 'SKINCARE', badge: 'NEW', badgeColor: '#888888', hasPlus: false, route: 'skincare' },
+    { label: 'BABY', badge: 'NEW', badgeColor: '#888888', hasPlus: false, route: 'baby' },
+    { label: 'NEW IN', badge: null, hasPlus: false, route: 'newIn' },
+    { label: 'FRIDGES', hasPlus: true, route: 'fridges' },
+    { label: 'KITCHEN', hasPlus: true, route: 'kitchen' },
+    { label: 'CEILING FANS', hasPlus: true, route: 'ceilingFans' },
+    { label: 'HEATERS', hasPlus: true, route: 'heaters' },
+    { label: 'PERSONAL CARE', hasPlus: true, route: 'personalCare' },
+    { label: 'AUDIO AND TV', hasPlus: true, route: 'audioTV' },
+    { label: 'TRAVEL SUITCASES', hasPlus: true, route: 'travelSuitcases' },
+    { label: 'GARDEN AND OUTDOOR', hasPlus: true, route: 'gardenOutdoor' },
+    { label: 'HOME AND CLEANING', hasPlus: true, route: 'homeCleaning' },
+    { label: 'CLIMATE APPLIANCES', hasPlus: true, route: 'climateAppliances' },
 ];
 
 const footerLinks = [
@@ -69,16 +60,13 @@ export default function ShopMenuScreen({ navigate }) {
                     <TouchableOpacity
                         key={index}
                         style={s.row}
-                        onPress={() => navigate('productCategory')}
+                        onPress={() => navigate(item.route)}
                         activeOpacity={0.6}
                     >
                         <View style={s.rowLeft}>
                             <Text style={s.rowLabel}>{item.label}</Text>
                             {item.badge && (
-                                <View style={[
-                                    s.badge,
-                                    { backgroundColor: item.badgeColor }
-                                ]}>
+                                <View style={[s.badge, { backgroundColor: item.badgeColor }]}>
                                     <Text style={s.badgeText}>{item.badge}</Text>
                                 </View>
                             )}
@@ -102,7 +90,6 @@ export default function ShopMenuScreen({ navigate }) {
                         <Text style={s.footerLabel}>{link}</Text>
                     </TouchableOpacity>
                 ))}
-
             </ScrollView>
         </SafeAreaView>
     );
